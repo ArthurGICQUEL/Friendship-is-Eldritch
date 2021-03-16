@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GetDoors();
+        GetDoors();
     }
 
     // Update is called once per frame
@@ -26,8 +26,21 @@ public class Room : MonoBehaviour
         {
             Door newChild = transform.GetChild(i).GetComponent<Door>();
             portes.Add(newChild);
-
         }
         return portes;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<Human>(out Human human))
+        {
+            humans.Add(human);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Human>(out Human human))
+        {
+            humans.Remove(human);
+        }
     }
 }
