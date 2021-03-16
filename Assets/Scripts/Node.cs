@@ -2,29 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
-    public int nom;
     public bool visited;
     public List<Node> children;
-    public int depth = -1;
+    Vector3 nodePos;
+    public Node Parent;
+    public int Depth;
 
-    public Node(int name, bool visited, int depth)
+    public Node(Vector3 pos)
     {
         children = new List<Node>();
-        nom = name;
-        this.visited = visited;
-        this.depth = depth;
+        visited = false;
+        nodePos = pos;
+        Clean();
     }
-    // Start is called before the first frame update
-    void Start()
+    public void Clean()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Parent = null;
+        Depth = -1;
     }
 }

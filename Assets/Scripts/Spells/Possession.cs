@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Possession : Spell
 {
-    public Room target;
     public float stunTime = 3f;
-    public override void Cast()
+    public override bool Cast()
     {
-        AudioManager.Instance.Play("Possesion");
+        if (target.humans.Count == 0) return false;
+        //AudioManager.Instance.Play("Possesion");
         List<Human> humans = target.humans;
         Human possessed = humans[Random.Range(0, humans.Count)];
         possessed.Stun(stunTime);
@@ -17,5 +17,6 @@ public class Possession : Spell
         {
             humans[i].State = MindState.Panicking;
         }
+        return true;
     }
 }

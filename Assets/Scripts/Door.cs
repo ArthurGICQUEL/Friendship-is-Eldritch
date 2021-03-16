@@ -15,14 +15,9 @@ public class Door : MonoBehaviour
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
         
-    }
-    public Vector2 GetDoorPos(Vector2 doorPos)
-    {
-        return doorPos;
     }
 }

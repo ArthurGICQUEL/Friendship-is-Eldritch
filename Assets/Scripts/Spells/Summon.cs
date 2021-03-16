@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Summon : Spell
 {
-    public Room target;
-    public override void Cast()
+    public override bool Cast()
     {
-        AudioManager.Instance.Play("Summon");
+        if (target.humans.Count > 0) return false;
+        //AudioManager.Instance.Play("Summon");
 
-        GameObject.Instantiate((Minion)Resources.Load("Villain"), target.transform.position, Quaternion.identity);
+        GameObject.Instantiate(Resources.Load("Villain"), target.transform.position, Quaternion.identity);
+        return true;
     }
 }

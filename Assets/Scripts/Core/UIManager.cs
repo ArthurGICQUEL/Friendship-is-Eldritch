@@ -5,72 +5,66 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance = null;
-    
-    private Spell _selectedSpell = null;
+    public static UIManager Instance;
+
+    Spell selectedSpell;
+
+    [SerializeField] GameObject canvasSpellCasting;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     private void Update()
     {
-        bool leftClick = Input.GetMouseButtonDown(0);
-        bool rightClick = Input.GetMouseButtonDown(1);
-
-        if (rightClick)
+        if (selectedSpell != null)
         {
-            DeselectSpell(true);
-        }
-        if (_selectedSpell != null)
-        {
-            if (leftClick)
+            if (Input.GetMouseButtonDown(0))
             {
-                PlaceSelectedSpell();
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null && hit.collider.GetComponent<Room>() != null) OnRoomClick(hit.collider.GetComponent<Room>());
             }
         }
     }
 
-    public void SelectSpell(int spellType)
+    public void OnRoomClick(Room room)
     {
-        if (_selectedSpell != null)
-        {
-            //Spell.Type lastSpellType = _selectedSpell.type;
-            DeselectSpell(true);
-        }
+        selectedSpell.target = room;
+        if (selectedSpell.Cast()) DeselectSpell();
     }
 
-    public void DeselectSpell(bool destroy = false)
+    public void OnSpellClick(int spell)
     {
-        if(destroy)
-        {
-
-        }
-        else
-        {
-            
-        }
+        selectedSpell = GetSpell(spell);
+        canvasSpellCasting.SetActive(true);
     }
 
-    void PlaceSelectedSpell()
+    public void DeselectSpell()
     {
-        //if (_selectedSpell.Place())
+        selectedSpell = null;
+        canvasSpellCasting.SetActive(false);
+    }
+
+    public Spell GetSpell(int spell)
+    {
+        switch (spell)
         {
-            DeselectSpell();
+            case 0:
+                return new Illusion();
+            case 1:
+                return new Possession();
+            case 2:
+                return new Summon();
+            default:
+                return null;
         }
     }
 }
