@@ -14,7 +14,7 @@ public class Bfs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public Vector3 BreathForSearch(Vector3 startPos, Vector3 goalPos)
     {
@@ -24,14 +24,14 @@ public class Bfs : MonoBehaviour
     void InitGraph()
     {
         Door[] doors = FindObjectsOfType<Door>();
-        for(int i = 0; i < doors.Length; i++ ) //met une node pour chaque porte
+        for (int i = 0; i < doors.Length; i++) //met une node pour chaque porte
         {
             nodeDic[doors[i].transform.position] = new Node(doors[i].transform.position);
         }
-        for(int i = 0; i < doors.Length; i++)
+        for (int i = 0; i < doors.Length; i++)
         {
             nodeDic[doors[i].transform.position].children.Add(nodeDic[doors[i].targetDoor.transform.position]); //link la porte d'en face qui fait parti de l'autre chambre
-            Door[] roomDoors = doors[i].room.doors.ToArray();
+            Door[] roomDoors = doors[i].room.doors;
             for (int j = 0; j < roomDoors.Length; j++)
             {
                 if (doors[i] != roomDoors[j])
@@ -100,7 +100,7 @@ public class Bfs : MonoBehaviour
     }
     Node GetNode(Vector3 nodePos)
     {
-        if(!nodeDic.ContainsKey(nodePos))
+        if (!nodeDic.ContainsKey(nodePos))
         {
             return null;
         }
