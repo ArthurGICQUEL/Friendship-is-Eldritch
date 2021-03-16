@@ -49,20 +49,24 @@ public class UIManager : MonoBehaviour
     {
         if (_selectedSpell != null)
         {
+            //Type object = new Type();
             //Spell.Type lastSpellType = _selectedSpell.type;
-            DeselectSpell(true);
+            DeselectSpell(false);
         }
     }
 
     public void DeselectSpell(bool destroy = false)
     {
-        if(destroy)
+        if (_selectedSpell != null)
         {
-
-        }
-        else
-        {
-            
+            if (destroy)
+            {
+                //Destroy(_selectedSpell.gameObject);
+            }
+            else
+            {
+                _selectedSpell = null;
+            }
         }
     }
 
