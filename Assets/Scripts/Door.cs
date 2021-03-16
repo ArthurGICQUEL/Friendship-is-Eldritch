@@ -5,8 +5,11 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     public Room room;
-    public Room targetRoom;
+    public Door targetDoor;
     public Vector2 pos;
+    private void Awake() {
+        room = GetComponentInParent<Room>();
+    }
     // Start is called before the first frame update
     void Start()
     {

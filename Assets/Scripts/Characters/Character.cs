@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour
     [SerializeField] float _speed = 1;
     [SerializeField] float _idleTime = 1;
     MindState _state = MindState.Idle;
-    Door _targetDoor = null;
+    Door _targetDoor = null, _lastDoor = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0;
 
@@ -35,6 +35,7 @@ public abstract class Character : MonoBehaviour
                 ActIdle();
                 break;
             case MindState.Exploring:
+                ActExploring();
                 break;
             case MindState.Panicking:
                 break;
@@ -66,7 +67,29 @@ public abstract class Character : MonoBehaviour
 
     void ActExploring()
     {
-
+        if (_targetDoor == null) {
+            // get the available doors in the currentRoom without the last door used, unless it's the only door
+            List<Door> availableDoors = new List<Door>(currentRoom.doors);
+            if (_lastDoor != null && availableDoors.Count > 1) {
+                availableDoors.Remove(_lastDoor);
+            }
+            // get a random door among the available ones
+            Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
+            // pass the chosen door to all the humans in the room
+            Human[] group = currentRoom.humans.ToArray();
+            for (int i=0; i<group.Length; i++) {
+                group[i]._targetDoor = nextDoor;
+            }
+        }
+        if (Move(_targetDoor.transform.position)) {
+            if (_lastDoor != null) {
+                if (_lastDoor == _targetDoor.targetDoor) {
+                    State = MindState.Idle;
+                    return;
+                }
+            } 
+            _lastDoor = _targetDoor;
+        }
     }
 
     void UnStun()
@@ -76,7 +99,7 @@ public abstract class Character : MonoBehaviour
 
     Vector3 GetTargetInRoom()
     {
-        return Vector3.zero;
+        return Vector3.Lerp(currentRoom.floorLimits[0], currentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
     void SetMindState(MindState newState)
@@ -100,7 +123,7 @@ public abstract class Character : MonoBehaviour
             default:
                 break;
         }
-        State = newState;
+        _state = newState;
     }
 
     /// <summary>

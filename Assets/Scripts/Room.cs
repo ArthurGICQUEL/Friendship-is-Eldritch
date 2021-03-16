@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public List<Door> doors;
+    public Door[] doors;
+    public Vector3[] floorLimits;
+    //public List<Door> doors;
     public Vector4 bounds;
     public List<Human> humans;
+
+    private void Awake() {
+        doors = GetComponentsInChildren<Door>();
+    }
     // Start is called before the first frame update
     void Start()
     {
