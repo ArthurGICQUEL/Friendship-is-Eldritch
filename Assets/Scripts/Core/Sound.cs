@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Sound : MonoBehaviour
 {
+    public string callName;
+
     public AudioClip clip;
 
     [Range(0f, 1f)]

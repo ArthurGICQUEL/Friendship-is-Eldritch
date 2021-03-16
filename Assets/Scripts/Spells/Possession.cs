@@ -15,7 +15,7 @@ public class Possession : Spell
         humans.Remove(possessed);
         for (int i = 0; i < humans.Count; i++)
         {
-            humans[i].MindState = MindState.Panicking;
+            humans[i].State = MindState.Panicking;
         }
     }
 }

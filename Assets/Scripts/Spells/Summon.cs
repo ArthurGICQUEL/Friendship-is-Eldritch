@@ -9,6 +9,6 @@ public class Summon : Spell
     {
         AudioManager.Instance.Play("Summon");
 
-        GameObject.Instantiate<Minion>(Resources.Load(""), target.transform.position, Quaternion.identity);
+        GameObject.Instantiate((Minion)Resources.Load("Villain"), target.transform.position, Quaternion.identity);
     }
 }

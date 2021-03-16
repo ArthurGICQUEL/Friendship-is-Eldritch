@@ -6,7 +6,7 @@ public class Room : MonoBehaviour
 {
     public List<Door> doors;
     public Vector4 bounds;
-    public List<Human> humanList;
+    public List<Human> humans;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public List<Door> GetDoors()
     {

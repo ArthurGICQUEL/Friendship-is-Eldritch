@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour {
-    public MindState State {
+public abstract class Character : MonoBehaviour
+{
+    public MindState State
+    {
         get { return _state; }
         set { SetMindState(value); }
     }
@@ -17,14 +19,18 @@ public abstract class Character : MonoBehaviour {
     Vector3 _inRoomTarget;
     float _stateTimer = 0;
 
-    private void Update() {
-        if (!isStuned) {
+    private void Update()
+    {
+        if (!isStuned)
+        {
             ChooseNextAction();
         }
     }
 
-    void ChooseNextAction() {
-        switch (State) {
+    void ChooseNextAction()
+    {
+        switch (State)
+        {
             case MindState.Idle:
                 ActIdle();
                 break;
@@ -43,32 +49,40 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
-    void ActIdle() {
+    void ActIdle()
+    {
         _stateTimer += Time.deltaTime;
-        if (_stateTimer >= _idleTime) { // if the idleTimer expires, switch to Exploring
+        if (_stateTimer >= _idleTime)
+        { // if the idleTimer expires, switch to Exploring
             State = MindState.Exploring;
             return;
         }
         // while the timer is ticking, move to random positions in the room
-        if (Move(_inRoomTarget)) {
+        if (Move(_inRoomTarget))
+        {
             _inRoomTarget = GetTargetInRoom();
         }
     }
 
-    void ActExploring() {
+    void ActExploring()
+    {
 
     }
 
-    void UnStun() {
+    void UnStun()
+    {
         isStuned = false;
     }
 
-    Vector3 GetTargetInRoom() {
+    Vector3 GetTargetInRoom()
+    {
         return Vector3.zero;
     }
 
-    void SetMindState(MindState newState) {
-        switch(newState) {
+    void SetMindState(MindState newState)
+    {
+        switch (newState)
+        {
             case MindState.Idle:
                 _stateTimer = 0;
                 _inRoomTarget = transform.position;
@@ -94,19 +108,22 @@ public abstract class Character : MonoBehaviour {
     /// </summary>
     /// <param name="targetPoint">The position to reach.</param>
     /// <returns><b>True</b> if the targetPoint has been reached, <b>False</b> if it hasn't.</returns>
-    protected bool Move(Vector3 targetPoint) {
+    protected bool Move(Vector3 targetPoint)
+    {
         transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _speed / Vector3.Distance(targetPoint, transform.position));
         return transform.position == targetPoint;
     }
 
     protected abstract Door GetNextDoor();
 
-    public void Stun(float duration) {
+    public void Stun(float duration)
+    {
         isStuned = true;
         Invoke(nameof(UnStun), duration);
     }
 }
 
-public enum MindState {
+public enum MindState
+{
     Idle = 0, Exploring = 1, Panicking = 2, Chased = 3, Enlightened = 4, Hunting = 10
 }

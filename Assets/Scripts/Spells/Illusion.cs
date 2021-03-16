@@ -9,10 +9,10 @@ public class Illusion : Spell
     public override void Cast()
     {
         AudioManager.Instance.Play("Illusion");
-        int nbHumans = target.humans.count;
+        int nbHumans = target.humans.Count;
         for (int i = 0; i < nbHumans; i++)
         {
-            target.humans[i].sanity += power / nbHumans;
+            target.humans[i].Sanity += power / nbHumans;
         }
     }
 }
