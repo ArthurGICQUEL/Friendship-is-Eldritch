@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (hit.collider != null && hit.collider.GetComponent<Room>() != null) OnRoomClick(hit.collider.GetComponent<Room>());
+                if (hit.collider != null && hit.collider.TryGetComponent(out Room room)) OnRoomClick(room);
             }
         }
     }
@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void OnSpellClick(int spell)
     {
-        selectedSpell = GetSpell(spell);
+        selectedSpell = Spell.GetSpell((SpellType)spell);
         canvasSpellCasting.SetActive(true);
     }
 
@@ -51,20 +51,5 @@ public class UIManager : MonoBehaviour
     {
         selectedSpell = null;
         canvasSpellCasting.SetActive(false);
-    }
-
-    public Spell GetSpell(int spell)
-    {
-        switch (spell)
-        {
-            case 0:
-                return new Illusion();
-            case 1:
-                return new Possession();
-            case 2:
-                return new Summon();
-            default:
-                return null;
-        }
     }
 }
