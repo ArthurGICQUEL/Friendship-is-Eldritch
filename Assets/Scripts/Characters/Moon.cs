@@ -5,7 +5,7 @@ using UnityEngine;
 public class Moon : MonoBehaviour
 {
     [SerializeField] GameObject[] targets = null;
-    
+
     float angle = 30f;
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,10 @@ public class Moon : MonoBehaviour
     {
         Transform m = objectToMove.transform;
         Vector3 center = (targets[0].transform.position + targets[1].transform.position) * 0.5F;
+        center -= new Vector3(0, 50, 0);
         Vector3 riseRelCenter = targets[0].transform.position - center;
         Vector3 setRelCenter = targets[1].transform.position - center;
-        m.position = Vector3.Slerp(riseRelCenter, setRelCenter, GameManager.Instance.timeOfNight/GameManager.Instance.tTNight);
+        m.position = Vector3.Slerp(riseRelCenter, setRelCenter, GameManager.Instance.timeOfNight / GameManager.Instance.tTNight);
         transform.position += center;
     }
 }
