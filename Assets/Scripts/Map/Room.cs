@@ -11,12 +11,18 @@ public class Room : MonoBehaviour
     public Bounds bounds;
     public bool isStartRoom;
 
+
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
         if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
+    public Vector3 GetMiddleFloor() {
+        return Vector3.Lerp(floorLimits[0], floorLimits[1], 0.5f);
+    }
+
+    /*
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.TryGetComponent(out Character character)) {
             character.currentRoom = this;
@@ -36,5 +42,5 @@ public class Room : MonoBehaviour
                 minions.Remove((Minion)character);
             }
         }
-    }
+    }*/
 }
