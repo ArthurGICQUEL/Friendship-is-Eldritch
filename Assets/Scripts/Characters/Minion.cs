@@ -6,8 +6,6 @@ public class Minion : Character
 {
     Human _prey = null;
     Queue<Node> _targetTrail = new Queue<Node>();
-    Node _targetNode = null, _lastNode = null;
-    Vector3 _targetPos;
 
     private void Start()
     {

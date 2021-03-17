@@ -25,7 +25,7 @@ public class Human : Character
     float _sanity = 1;
     MindState _state = MindState.Idle;
     //Minion _hunter = null;
-    Door _targetDoor = null, _lastDoor = null;
+    Room _targetRoom = null, _lastRoom = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0;
 
@@ -83,45 +83,48 @@ public class Human : Character
 
     void ActExploring()
     {
-        if (_targetDoor == null)
+        if (_targetRoom == null)
         {
-            // get the available doors in the currentRoom without the last door used, unless it's the only door
-            List<Door> availableDoors = new List<Door>(CurrentRoom.doors);
-            if (_lastDoor != null && availableDoors.Count > 1)
+            // get the available rooms accessible from the currentRoom without the last room used, unless it's the only available one
+            List<Room> availableRooms = GetAvailableRooms();
+            if (_lastRoom != null && availableRooms.Count > 1)
             {
-                availableDoors.Remove(_lastDoor);
+                availableRooms.Remove(_lastRoom);
             }
-            // get a random door among the available ones
-            Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
-            // pass the chosen door to all the humans in the room
+            // get a random room among the available ones
+            Room nextRoom = availableRooms[Random.Range(0, availableRooms.Count)];
+            // pass the chosen room to all the humans in the room
             Human[] group = CurrentRoom.humans.ToArray();
             Debug.LogWarning($"GroupSize = {group.Length}");
             for (int i = 0; i < group.Length; i++)
             {
-                group[i]._targetDoor = nextDoor;
+                group[i].State = MindState.Exploring;
+                group[i]._targetRoom = nextRoom;
+                group[i]._targetNode = Bfs.GetNode(group[i].CurrentRoom.GetMiddleFloor());
             }
         }
-        if (_targetDoor == null) {
+        if (_targetRoom == null) {
             Debug.LogWarning($"{name} doesn't have a target door.");
         }
-        MoveToTargetDoor();
+        MoveToTargetRoom();
     }
 
     void ActPanicking()
     {
-        if (_targetDoor == null)
+        if (_targetRoom == null)
         {
-            // get the available doors in the currentRoom
-            List<Door> availableDoors = new List<Door>(CurrentRoom.doors);
-            // get a random door among the available ones
-            _targetDoor = availableDoors[Random.Range(0, availableDoors.Count)];
+            // get the available rooms in the currentRoom
+            List<Room> availableRooms = GetAvailableRooms();
+            // get a random room among the available ones
+            _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
+            _targetNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
         }
-        MoveToTargetDoor();
+        MoveToTargetRoom();
     }
 
     void ActChased()
     {
-        if (_targetDoor == null)
+        if (_targetRoom == null)
         {
             // get the available doors in the currentRoom that are opposite to the minions
             List<Door> availableDoors = new List<Door>();
@@ -132,13 +135,16 @@ public class Human : Character
                     availableDoors.Add(CurrentRoom.doors[i]);
                 }
             }
+            // get the available rooms based on those doors
+            List<Room> availableRooms = GetAvailableRooms(availableDoors);
             // get a random door among the available ones or stay frightened
-            if (availableDoors.Count > 0)
+            if (availableRooms.Count > 0)
             {
-                _targetDoor = availableDoors[Random.Range(0, availableDoors.Count)];
+                _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
+                _targetNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
             }
         }
-        MoveToTargetDoor();
+        MoveToTargetRoom();
     }
 
     void ActEnlightened()
@@ -146,30 +152,43 @@ public class Human : Character
         // ???
     }
 
-    void MoveToTargetDoor()
+    void MoveToTargetRoom()
     {
-        if (_targetDoor == null) { return; }
-        if (Move(_targetDoor.transform.position))
-        {
-            if (_lastDoor == null)
-            {
-                _lastDoor = _targetDoor;
+        if (_targetNode == null) { return; }
+        CurrentRoom = FindCurrentRoom();
+        if (Move(_targetNode.position)) {
+            if (_targetRoom == null || _targetNode == null) {
+                Debug.LogWarning($"_targetRoom: {_targetRoom}; _targetNode: {_targetNode}");
             }
-            // if the room of the door is different than the current one, then a new room has been reached
-            if (_targetDoor.room != CurrentRoom)
-            {
-                CurrentRoom = _targetDoor.room;
+            if (_targetRoom.GetMiddleFloor() == _targetNode.position) {
+                _lastRoom = CurrentRoom;
+                //CurrentRoom = _targetRoom;
                 State = MindState.Idle;
                 return;
             }
-            _lastDoor = _targetDoor;
-            _targetDoor = _targetDoor.targetDoor;
+            _lastNode = _targetNode;
+            _targetNode = FindNextNode();
         }
     }
 
     Vector3 GetTargetInRoom()
     {
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
+    }
+
+    protected Node FindNextNode() {
+        return Bfs.GetNextNode(_targetNode.position, _targetRoom.GetMiddleFloor());
+    }
+
+    List<Room> GetAvailableRooms(List<Door> availableDoors = null) {
+        Door[] roomDoors = availableDoors != null ? availableDoors.ToArray() : CurrentRoom.doors;
+        List<Room> availableRooms = new List<Room>();
+        for(int i = 0; i < roomDoors.Length; i++) {
+            if(!availableRooms.Contains(roomDoors[i].targetDoor.room)) {
+                availableRooms.Add(roomDoors[i].targetDoor.room);
+            }
+        }
+        return availableRooms;
     }
 
     void OnSanityChange()
@@ -198,6 +217,7 @@ public class Human : Character
         if (room.humans.Contains(this))
         {
             room.humans.Remove(this);
+            Debug.LogWarning($"a human left {room.name}");
         }
     }
 
@@ -225,7 +245,7 @@ public class Human : Character
             default:
                 break;
         }
-        _targetDoor = null;
+        _targetRoom = null;
         _state = newState;
     }
 

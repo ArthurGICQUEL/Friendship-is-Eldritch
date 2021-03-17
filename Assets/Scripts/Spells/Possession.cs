@@ -9,7 +9,7 @@ public class Possession : Spell
     {
         if (target.humans.Count == 0) return false;
         //AudioManager.Instance.Play("Possesion");
-        List<Human> humans = target.humans;
+        List<Human> humans = new List<Human>(target.humans);
         Human possessed = humans[Random.Range(0, humans.Count)];
         possessed.Stun(stunTime);
         humans.Remove(possessed);

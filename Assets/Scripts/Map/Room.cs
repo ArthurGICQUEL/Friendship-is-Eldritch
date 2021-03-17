@@ -26,6 +26,10 @@ public class Room : MonoBehaviour
         if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
+    private void Update() {
+        Debug.LogWarning($"{name} has {humans.Count} humans.");
+    }
+
     public Vector3 GetMiddleFloor()
     {
         return Vector3.Lerp(floorLimits[0], floorLimits[1], 0.5f);

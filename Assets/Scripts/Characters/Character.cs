@@ -7,13 +7,17 @@ public abstract class Character : MonoBehaviour
     public Room CurrentRoom
     {
         get { return _currentRoom; }
-        set { OnExitRoom(_currentRoom); OnEnterRoom(value); }
+        set { 
+            OnExitRoom(_currentRoom); OnEnterRoom(value); 
+        }
     }
     public bool isStuned = false;
 
     [SerializeField] protected float _baseSpeed = 1;
     protected float _speedRatio = 1;
     protected Room _currentRoom = null;
+    protected Node _targetNode = null, _lastNode = null;
+    protected Vector3 _targetPos;
 
     private void Awake()
     {

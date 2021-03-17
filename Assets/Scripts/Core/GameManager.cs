@@ -45,10 +45,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Bfs.InitGraph();
     }
-    private void Start()
+
+    private void Start() 
     {
+        Bfs.InitGraph();
+
         Time.timeScale = 1;
         instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
         timeOfNight = 0;
