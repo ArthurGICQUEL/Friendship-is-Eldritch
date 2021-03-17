@@ -13,11 +13,12 @@ public abstract class Character : MonoBehaviour
     public bool isStuned = false;
 
     [SerializeField] float _speed = 1;
-    [SerializeField] float _idleTime = 1;
+    [SerializeField] float _idleTime = 10;
+    [SerializeField] float _idleStillTime = 1;
     MindState _state = MindState.Idle;
     Door _targetDoor = null, _lastDoor = null;
     Vector3 _inRoomTarget;
-    float _stateTimer = 0;
+    float _stateTimer = 0, _idleStillTimer = 0;
 
     private void Update()
     {
