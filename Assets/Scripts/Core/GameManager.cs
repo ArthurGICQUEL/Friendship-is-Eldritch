@@ -47,9 +47,10 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        for (int i = nbStartHuman; i == 0; i--)
+        Debug.Log(startRoom.floorLimits);
+        for (int i = 0; i < nbStartHuman; i++)
         {
-            Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (nbStartHuman + 2)), Quaternion.identity);
+            Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
         }
     }
 }
