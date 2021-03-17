@@ -257,13 +257,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doors: []
+  humans: []
   floorLimits:
-  - {x: -0.05, y: -0.05, z: 0}
-  - {x: 0.05, y: -0.05, z: 0}
+  - {x: -2.5, y: -0.5, z: 0}
+  - {x: -1.5, y: -0.5, z: 0}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
-  humans: []
   isStartRoom: 0
 --- !u!212 &45432010
 SpriteRenderer:
@@ -323,7 +323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45432007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.54, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 811473196}
@@ -921,8 +921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 45432009}
-  targetDoor: {fileID: 0}
-  pos: {x: 0, y: 0}
+  targetDoor: {fileID: 2050576245}
+  floorPos: {x: 0, y: 0, z: 0}
 --- !u!1 &845214418
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,7 +991,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845214418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 402.78525, y: 52.3195, z: -616.8103}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1486,13 +1486,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doors: []
+  humans: []
   floorLimits:
-  - {x: -0.05, y: -0.05, z: 0}
-  - {x: 0.05, y: -0.05, z: 0}
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
-  humans: []
   isStartRoom: 1
 --- !u!212 &1622832202
 SpriteRenderer:
@@ -1837,8 +1837,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 1622832201}
-  targetDoor: {fileID: 0}
-  pos: {x: 0, y: 0}
+  targetDoor: {fileID: 811473197}
+  floorPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2118588777
 GameObject:
   m_ObjectHideFlags: 0
