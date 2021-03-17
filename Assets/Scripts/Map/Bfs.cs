@@ -9,19 +9,30 @@ public static class Bfs
     public static void InitGraph()
     {
         Door[] doors = GameObject.FindObjectsOfType<Door>();
+        if (doors.Length == 0) { return; }
         for (int i = 0; i < doors.Length; i++) //met une node pour chaque porte
         {
             nodeDic[doors[i].transform.position] = new Node(doors[i].transform.position);
+            Vector3 roomPos = doors[i].room.GetMiddleFloor();
+            Debug.Log(roomPos);
+            if (!nodeDic.ContainsKey(roomPos)) {
+                nodeDic[roomPos] = new Node(roomPos);
+            }
         }
+        Node nodeDoor, nodeRoom;
         for (int i = 0; i < doors.Length; i++)
         {
-            nodeDic[doors[i].transform.position].children.Add(nodeDic[doors[i].targetDoor.transform.position]); //link la porte d'en face qui fait parti de l'autre chambre
+            nodeDoor = nodeDic[doors[i].transform.position];
+            nodeRoom = nodeDic[doors[i].room.GetMiddleFloor()];
+            nodeRoom.children.Add(nodeDoor); //link la room and cette door
+            nodeDoor.children.Add(nodeRoom); //link la door avec sa room
+            nodeDoor.children.Add(nodeDic[doors[i].targetDoor.transform.position]); //link la porte d'en face qui fait parti de l'autre chambre
             Door[] roomDoors = doors[i].room.doors;
             for (int j = 0; j < roomDoors.Length; j++)
             {
                 if (doors[i] != roomDoors[j])
                 {
-                    nodeDic[doors[i].transform.position].children.Add(nodeDic[roomDoors[j].transform.position]); // link les portes de la chambre à la porte actuelle
+                    nodeDoor.children.Add(nodeDic[roomDoors[j].transform.position]); // link les portes de la chambre à la porte actuelle
                 }
             }
         }

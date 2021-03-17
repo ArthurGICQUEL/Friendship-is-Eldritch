@@ -34,7 +34,7 @@ public abstract class Character : MonoBehaviour
         Invoke(nameof(UnStun), duration);
     }
 
-    void UnStun()
+    protected virtual void UnStun()
     {
         isStuned = false;
     }

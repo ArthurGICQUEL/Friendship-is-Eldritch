@@ -95,10 +95,14 @@ public class Human : Character
             Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             // pass the chosen door to all the humans in the room
             Human[] group = CurrentRoom.humans.ToArray();
+            Debug.LogWarning($"GroupSize = {group.Length}");
             for (int i = 0; i < group.Length; i++)
             {
                 group[i]._targetDoor = nextDoor;
             }
+        }
+        if (_targetDoor == null) {
+            Debug.LogWarning($"{name} doesn't have a target door.");
         }
         MoveToTargetDoor();
     }
@@ -171,6 +175,11 @@ public class Human : Character
     void OnSanityChange()
     {
         // if sanity becomes zero or smth
+    }
+
+    protected override void UnStun() {
+        base.UnStun();
+        State = MindState.Idle;
     }
 
     protected override void OnEnterRoom(Room room)
