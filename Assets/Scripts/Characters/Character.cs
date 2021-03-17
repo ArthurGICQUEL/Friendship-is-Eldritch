@@ -10,8 +10,13 @@ public abstract class Character : MonoBehaviour
     }
     public bool isStuned = false;
 
-    [SerializeField] float _speed = 1;
-    Room _currentRoom = null;
+    [SerializeField] protected float _baseSpeed = 1;
+    protected float _speedRatio = 1;
+    protected Room _currentRoom = null;
+
+    private void Start() {
+        _currentRoom = GameManager.Instance.startRoom;
+    }
 
     private void Update()
     {
@@ -37,11 +42,9 @@ public abstract class Character : MonoBehaviour
     /// <returns><b>True</b> if the targetPoint has been reached, <b>False</b> if it hasn't.</returns>
     protected bool Move(Vector3 targetPoint)
     {
-        transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _speed / Vector3.Distance(targetPoint, transform.position));
+        transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _baseSpeed / Vector3.Distance(targetPoint, transform.position));
         return transform.position == targetPoint;
     }
-
-    protected abstract Door GetNextDoor();
 
     public void Stun(float duration)
     {
