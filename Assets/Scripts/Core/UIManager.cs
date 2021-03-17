@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     Spell selectedSpell;
     public Slider slider;
     public Image fill;
-    
+
     [SerializeField] GameObject canvasSpellCasting;
 
     private void Awake()
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-       
+
     }
 
     public void OnRoomClick(Room room)
@@ -67,7 +67,9 @@ public class UIManager : MonoBehaviour
     }
     public void SetMaxTime(float time, float maxTime)
     {
+        Debug.Log(maxTime);
         slider.maxValue = maxTime;
+        Debug.Log("MAX " + slider.maxValue);
         slider.value = time;
     }
     public void SetTime(float time)

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public Room CurrentRoom {
+    public Room CurrentRoom
+    {
         get { return _currentRoom; }
         set { OnExitRoom(_currentRoom); OnEnterRoom(value); }
     }
@@ -14,7 +15,8 @@ public abstract class Character : MonoBehaviour
     protected float _speedRatio = 1;
     protected Room _currentRoom = null;
 
-    private void Start() {
+    private void Awake()
+    {
         CurrentRoom = FindCurrentRoom();
     }
 
@@ -26,12 +28,14 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void Stun(float duration) {
+    public void Stun(float duration)
+    {
         isStuned = true;
         Invoke(nameof(UnStun), duration);
     }
 
-    void UnStun() {
+    void UnStun()
+    {
         isStuned = false;
     }
 
@@ -40,15 +44,19 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     /// <param name="targetPoint">The position to reach.</param>
     /// <returns><b>True</b> if the targetPoint has been reached, <b>False</b> if it hasn't.</returns>
-    protected bool Move(Vector3 targetPoint) {
+    protected bool Move(Vector3 targetPoint)
+    {
         transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _baseSpeed / Vector3.Distance(targetPoint, transform.position));
         return transform.position == targetPoint;
     }
 
-    protected Room FindCurrentRoom() {
+    protected Room FindCurrentRoom()
+    {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
-        for (int i=0; i<hits.Length; i++) {
-            if (hits[i].collider.TryGetComponent(out Room room)) {
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.TryGetComponent(out Room room))
+            {
                 return room;
             }
         }

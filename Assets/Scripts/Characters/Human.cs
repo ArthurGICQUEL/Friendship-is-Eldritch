@@ -29,6 +29,11 @@ public class Human : Character
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0;
 
+    private void Start()
+    {
+        State = MindState.Idle;
+    }
+
     protected override void ChooseNextAction()
     {
         switch (State)
@@ -82,14 +87,16 @@ public class Human : Character
         {
             // get the available doors in the currentRoom without the last door used, unless it's the only door
             List<Door> availableDoors = new List<Door>(CurrentRoom.doors);
-            if(_lastDoor != null && availableDoors.Count > 1) {
+            if (_lastDoor != null && availableDoors.Count > 1)
+            {
                 availableDoors.Remove(_lastDoor);
             }
             // get a random door among the available ones
             Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             // pass the chosen door to all the humans in the room
             Human[] group = CurrentRoom.humans.ToArray();
-            for(int i = 0; i < group.Length; i++) {
+            for (int i = 0; i < group.Length; i++)
+            {
                 group[i]._targetDoor = nextDoor;
             }
         }
@@ -114,8 +121,10 @@ public class Human : Character
         {
             // get the available doors in the currentRoom that are opposite to the minions
             List<Door> availableDoors = new List<Door>();
-            for (int i=0; i< CurrentRoom.doors.Length; i++) {
-                if (!CheckIfMinionBlocksDoor(CurrentRoom.doors[i])) {
+            for (int i = 0; i < CurrentRoom.doors.Length; i++)
+            {
+                if (!CheckIfMinionBlocksDoor(CurrentRoom.doors[i]))
+                {
                     availableDoors.Add(CurrentRoom.doors[i]);
                 }
             }
@@ -125,7 +134,6 @@ public class Human : Character
                 _targetDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             }
         }
-        if (_targetDoor == null) { return; }
         MoveToTargetDoor();
     }
 
@@ -136,6 +144,7 @@ public class Human : Character
 
     void MoveToTargetDoor()
     {
+        if (_targetDoor == null) { return; }
         if (Move(_targetDoor.transform.position))
         {
             if (_lastDoor == null)
@@ -143,7 +152,8 @@ public class Human : Character
                 _lastDoor = _targetDoor;
             }
             // if the room of the door is different than the current one, then a new room has been reached
-            if(_targetDoor.room != CurrentRoom) {
+            if (_targetDoor.room != CurrentRoom)
+            {
                 CurrentRoom = _targetDoor.room;
                 State = MindState.Idle;
                 return;
@@ -153,7 +163,8 @@ public class Human : Character
         }
     }
 
-    Vector3 GetTargetInRoom() {
+    Vector3 GetTargetInRoom()
+    {
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
@@ -162,17 +173,21 @@ public class Human : Character
         // if sanity becomes zero or smth
     }
 
-    protected override void OnEnterRoom(Room room) {
-        if(room == null) { return; }
-        if(!room.humans.Contains(this)) {
+    protected override void OnEnterRoom(Room room)
+    {
+        if (room == null) { return; }
+        if (!room.humans.Contains(this))
+        {
             room.humans.Add(this);
             _currentRoom = room;
         }
     }
 
-    protected override void OnExitRoom(Room room) {
-        if(room == null) { return; }
-        if (room.humans.Contains(this)) {
+    protected override void OnExitRoom(Room room)
+    {
+        if (room == null) { return; }
+        if (room.humans.Contains(this))
+        {
             room.humans.Remove(this);
         }
     }

@@ -10,9 +10,7 @@ public class StaringEyes : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) - new Vector3(0, 0, -10);
-        Debug.Log(mouseWorldPosition);
         Vector3 relative = mouseWorldPosition - transform.position;
-        Debug.Log(relative.magnitude);
 
         if (relative.magnitude < eyeRadius) pupil.transform.position = mouseWorldPosition;
 

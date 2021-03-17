@@ -7,7 +7,8 @@ public class Room : MonoBehaviour
     [HideInInspector] public Door[] doors;
     [HideInInspector] public List<Human> humans;
     [HideInInspector] public List<Minion> minions;
-    public Vector3[] floorLimits;
+    [HideInInspector] public Vector3[] floorLimits;
+    [SerializeField] Vector3[] floorLimitsOffset;
     public Bounds bounds;
     public bool isStartRoom;
 
@@ -15,10 +16,18 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
+
+        floorLimits = new Vector3[floorLimitsOffset.Length];
+        for (int i = 0; i < floorLimitsOffset.Length; i++)
+        {
+            floorLimits[i] = floorLimitsOffset[i] + transform.position;
+        }
+
         if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
-    public Vector3 GetMiddleFloor() {
+    public Vector3 GetMiddleFloor()
+    {
         return Vector3.Lerp(floorLimits[0], floorLimits[1], 0.5f);
     }
 

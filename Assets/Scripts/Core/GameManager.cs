@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
-    public float timeOfNight, tTNight = 0f;
+    public float timeOfNight, tTNight = 60f;
 
 
     public float Mana
@@ -45,16 +45,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //Bfs.InitGraph();
+        Bfs.InitGraph();
     }
     private void Start()
     {
         instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
-        tTNight = 5f;
         timeOfNight = 0;
         for (int i = 0; i < nbStartHuman; i++)
         {
-            //Instantiate((Human)Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
+            Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
         }
     }
     private void Update()
@@ -70,11 +69,6 @@ public class GameManager : MonoBehaviour
     }
     void IncMoonTime()
     {
-<<<<<<< HEAD
         timeOfNight = Time.time * 1;
-=======
-        //timeOfNight = Time.time * 1;
-        //Debug.Log(timeOfNight);
->>>>>>> 144166b5da9a5cf3142fe8034c19e2affa04ec27
     }
 }
