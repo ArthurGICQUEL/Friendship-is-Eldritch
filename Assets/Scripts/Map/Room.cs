@@ -6,7 +6,6 @@ public class Room : MonoBehaviour
 {
     public Door[] doors;
     public Vector3[] floorLimits;
-    //public List<Door> doors;
     public Bounds bounds;
     public List<Human> humans;
 
