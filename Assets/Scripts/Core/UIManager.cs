@@ -35,6 +35,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateUI()
+    {
+
+    }
+
     public void OnRoomClick(Room room)
     {
         selectedSpell.target = room;

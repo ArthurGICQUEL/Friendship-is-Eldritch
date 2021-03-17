@@ -6,9 +6,9 @@ public class Door : MonoBehaviour
 {
     [HideInInspector] public Room room;
     public Door targetDoor;
-    public Vector2 pos;
+    public Vector3 floorPos;
 
-    private void Awake() {
+    void Awake() {
         room = GetComponentInParent<Room>();
     }
 }

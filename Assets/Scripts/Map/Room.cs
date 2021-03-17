@@ -8,10 +8,12 @@ public class Room : MonoBehaviour
     [HideInInspector] public List<Human> humans;
     public Vector3[] floorLimits;
     public Bounds bounds;
+    public bool isStartRoom;
 
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
+        if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +28,7 @@ public class Room : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Human>(out Human human))
         {
+            human.currentRoom = null;
             humans.Remove(human);
             human.currentRoom = null;
         }
