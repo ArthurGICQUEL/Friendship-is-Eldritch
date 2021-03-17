@@ -8,10 +8,12 @@ public class Room : MonoBehaviour
     public Vector3[] floorLimits;
     public Bounds bounds;
     public List<Human> humans;
+    public bool isStartRoom;
 
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
+        if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
