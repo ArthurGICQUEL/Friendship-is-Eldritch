@@ -1390,7 +1390,7 @@ MonoBehaviour:
   nbStartHuman: 5
   startRoom: {fileID: 0}
   timeOfNight: 0
-  tTNight: 60
+  tTNight: 10
 --- !u!114 &845214421
 MonoBehaviour:
   m_ObjectHideFlags: 0
