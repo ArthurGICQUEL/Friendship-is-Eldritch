@@ -20,12 +20,14 @@ public class Room : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Human>(out Human human))
         {
             humans.Add(human);
+            human.currentRoom = this;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent<Human>(out Human human))
         {
+            human.currentRoom = null;
             humans.Remove(human);
         }
     }
