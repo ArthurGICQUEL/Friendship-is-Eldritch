@@ -2,28 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bfs : MonoBehaviour
+public static class Bfs
 {
-    Dictionary<Vector3, Node> nodeDic = new Dictionary<Vector3, Node>();
-    Queue<Vector3> nodeQueue = null;
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitGraph();
-    }
-    // Update is called once per frame
-    void Update()
-    {
+    static Dictionary<Vector3, Node> nodeDic = new Dictionary<Vector3, Node>();
+    static Queue<Vector3> nodeQueue = null;
 
-    }
-    public Vector3 BreathForSearch(Vector3 startPos, Vector3 goalPos)
-    {
 
-        return new Vector3();
-    }
-    void InitGraph()
+    public static void InitGraph()
     {
-        Door[] doors = FindObjectsOfType<Door>();
+        Door[] doors = GameObject.FindObjectsOfType<Door>();
         for (int i = 0; i < doors.Length; i++) //met une node pour chaque porte
         {
             nodeDic[doors[i].transform.position] = new Node(doors[i].transform.position);
@@ -41,7 +28,7 @@ public class Bfs : MonoBehaviour
             }
         }
     }
-    public Node GetPath(Vector3 from, Vector3 to)
+    public static Node GetNextNode(Vector3 from, Vector3 to)
     {
         Node startNode = GetNode(from);
         Node endNode = GetNode(to);
@@ -79,7 +66,7 @@ public class Bfs : MonoBehaviour
         }
         return null;
     }
-    List<Node> GetParentPath(Node node, List<Node> path = null)
+    static List<Node> GetParentPath(Node node, List<Node> path = null)
     {
         if (path == null) { path = new List<Node>(); }
         if (node == null)
@@ -89,7 +76,7 @@ public class Bfs : MonoBehaviour
         path.Add(node);
         return GetParentPath(node.Parent, path);
     }
-    void CleanNodes()
+    static void CleanNodes()
     {
         // Clean the nodes before next time
         List<Node> nodes = new List<Node>(nodeDic.Values);
@@ -98,7 +85,7 @@ public class Bfs : MonoBehaviour
             nodes[i].Clean();
         }
     }
-    Node GetNode(Vector3 nodePos)
+    static Node GetNode(Vector3 nodePos)
     {
         if (!nodeDic.ContainsKey(nodePos))
         {
