@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public Door[] doors;
+    [HideInInspector] public Door[] doors;
+    [HideInInspector] public List<Human> humans;
     public Vector3[] floorLimits;
     public Bounds bounds;
-    public List<Human> humans;
+    public bool isStartRoom;
 
     private void Awake()
     {
         doors = GetComponentsInChildren<Door>();
+        if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +30,7 @@ public class Room : MonoBehaviour
         {
             human.currentRoom = null;
             humans.Remove(human);
+            human.currentRoom = null;
         }
     }
 }

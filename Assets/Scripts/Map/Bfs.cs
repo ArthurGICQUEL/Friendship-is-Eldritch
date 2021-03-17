@@ -5,8 +5,6 @@ using UnityEngine;
 public static class Bfs
 {
     static Dictionary<Vector3, Node> nodeDic = new Dictionary<Vector3, Node>();
-    static Queue<Vector3> nodeQueue = null;
-
 
     public static void InitGraph()
     {

@@ -6,14 +6,17 @@ public class Minion : Character
 {
     Human _target;
 
-    private void Awake()
-    {
-        State = MindState.Hunting;
+    protected override void ChooseNextAction() {
+        // hunting behaviour
     }
 
     protected override Door GetNextDoor()
     {
         //
         return null;
+    }
+
+    protected override void OnEnterRoom() {
+        //
     }
 }
