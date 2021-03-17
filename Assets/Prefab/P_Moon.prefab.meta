@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefab/P_Moon.prefab.meta
 guid: 6b4c4b75efd64fb449c8e166bf98e78f
 PrefabImporter:
+=======
+guid: 0ca9516dcc7347241969b67ce9977ebc
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 3dd00b923f2fe4124117d2c60778b0e70b73dc3f:Assets/Sprites/Animations/Character3.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
