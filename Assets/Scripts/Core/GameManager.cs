@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] GameObject moonPrefab = null;
-    public GameObject instMoon;
+    [HideInInspector] public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
     public float timeOfNight, tTNight = 60f;
@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        Time.timeScale = 1;
         instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
         timeOfNight = 0;
         for (int i = 0; i < nbStartHuman; i++)

@@ -23,7 +23,10 @@ public class Moon : MonoBehaviour
     public void MoveMoon(GameObject objectToMove)
     {
         Transform m = objectToMove.transform;
-        m.rotation = new Quaternion(0,0,Mathf.Lerp(-angle, angle, GameManager.Instance.timeOfNight / GameManager.Instance.tTNight),0);
-        m.position = new Vector3( Mathf.Lerp(targets[0].transform.position.x, targets[1].transform.position.x, GameManager.Instance.timeOfNight / GameManager.Instance.tTNight),0,0);
+        Vector3 center = (targets[0].transform.position + targets[1].transform.position) * 0.5F;
+        Vector3 riseRelCenter = targets[0].transform.position - center;
+        Vector3 setRelCenter = targets[1].transform.position - center;
+        m.position = Vector3.Slerp(riseRelCenter, setRelCenter, GameManager.Instance.timeOfNight/GameManager.Instance.tTNight);
+        transform.position += center;
     }
 }
