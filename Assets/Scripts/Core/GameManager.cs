@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [SerializeField] GameObject moonPrefab = null;
+    public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
-    public float timeOfNight;
+    public float timeOfNight, tTNight = 0f;
 
 
     public float Mana
@@ -43,14 +45,32 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Bfs.InitGraph();
+        //Bfs.InitGraph();
     }
     private void Start()
     {
-        Debug.Log(startRoom.floorLimits);
+        instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
+        tTNight = 5f;
+        timeOfNight = 0;
         for (int i = 0; i < nbStartHuman; i++)
         {
             Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
         }
+    }
+    private void Update()
+    {
+        if (timeOfNight < tTNight)
+        {
+            IncMoonTime();
+        }
+        else
+        {
+            //Time.timeScale = 0;
+        }
+    }
+    void IncMoonTime()
+    {
+        //timeOfNight = Time.time * 1;
+        //Debug.Log(timeOfNight);
     }
 }
