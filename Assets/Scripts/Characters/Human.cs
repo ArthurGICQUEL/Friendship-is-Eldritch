@@ -21,10 +21,10 @@ public class Human : Character {
     [SerializeField] float sanityMax = 1;
     float _sanity = 1;
     MindState _state = MindState.Idle;
+    //Minion _hunter = null;
     Door _targetDoor = null, _lastDoor = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0;
-
 
     protected override void ChooseNextAction() {
         switch(State) {
@@ -69,14 +69,14 @@ public class Human : Character {
     void ActExploring() {
         if(_targetDoor == null) {
             // get the available doors in the currentRoom without the last door used, unless it's the only door
-            List<Door> availableDoors = new List<Door>(currentRoom.doors);
+            List<Door> availableDoors = new List<Door>(CurrentRoom.doors);
             if(_lastDoor != null && availableDoors.Count > 1) {
                 availableDoors.Remove(_lastDoor);
             }
             // get a random door among the available ones
             Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             // pass the chosen door to all the humans in the room
-            Human[] group = currentRoom.humans.ToArray();
+            Human[] group = CurrentRoom.humans.ToArray();
             for(int i = 0; i < group.Length; i++) {
                 group[i]._targetDoor = nextDoor;
             }
@@ -87,7 +87,7 @@ public class Human : Character {
     void ActPanicking() {
         if(_targetDoor == null) {
             // get the available doors in the currentRoom
-            List<Door> availableDoors = new List<Door>(currentRoom.doors);
+            List<Door> availableDoors = new List<Door>(CurrentRoom.doors);
             // get a random door among the available ones
             _targetDoor = availableDoors[Random.Range(0, availableDoors.Count)];
         }
@@ -98,9 +98,9 @@ public class Human : Character {
         if(_targetDoor == null) {
             // get the available doors in the currentRoom that are opposite to the minions
             List<Door> availableDoors = new List<Door>();
-            for (int i=0; i< currentRoom.doors.Length; i++) {
-                if (!CheckIfMinionBlocksDoor(currentRoom.doors[i])) {
-                    availableDoors.Add(currentRoom.doors[i]);
+            for (int i=0; i< CurrentRoom.doors.Length; i++) {
+                if (!CheckIfMinionBlocksDoor(CurrentRoom.doors[i])) {
+                    availableDoors.Add(CurrentRoom.doors[i]);
                 }
             }
             // get a random door among the available ones or stay frightened
@@ -121,8 +121,9 @@ public class Human : Character {
             if(_lastDoor == null) {
                 _lastDoor = _targetDoor;
             }
-            // if the linked door to the current one is also the last one passed, then a new room has been reached
-            if(_lastDoor == _targetDoor.targetDoor) {
+            // if the room of the door is different than the current one, then a new room has been reached
+            if(_targetDoor.room != CurrentRoom) {
+                CurrentRoom = _targetDoor.room;
                 State = MindState.Idle;
                 return;
             }
@@ -132,15 +133,26 @@ public class Human : Character {
     }
 
     Vector3 GetTargetInRoom() {
-        return Vector3.Lerp(currentRoom.floorLimits[0], currentRoom.floorLimits[1], Random.Range(0f, 1f));
+        return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
     void OnSanityChange() {
         // if sanity becomes zero or smth
     }
 
-    protected override void OnEnterRoom() {
-        // MAYBE: Reload idle time for all humans in room
+    protected override void OnEnterRoom(Room room) {
+        if(room == null) { return; }
+        if(!room.humans.Contains(this)) {
+            room.humans.Add(this);
+            _currentRoom = room;
+        }
+    }
+
+    protected override void OnExitRoom(Room room) {
+        if(room == null) { return; }
+        if (room.humans.Contains(this)) {
+            room.humans.Remove(this);
+        }
     }
 
     void SetMindState(MindState newState) {

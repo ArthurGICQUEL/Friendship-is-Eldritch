@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public Room currentRoom {
+    public Room CurrentRoom {
         get { return _currentRoom; }
-        set { _currentRoom = value; OnEnterRoom(); }
+        set { OnExitRoom(_currentRoom); OnEnterRoom(value); }
     }
     public bool isStuned = false;
 
@@ -15,10 +15,10 @@ public abstract class Character : MonoBehaviour
     protected Room _currentRoom = null;
 
     private void Start() {
-        _currentRoom = GameManager.Instance.startRoom;
+        CurrentRoom = FindCurrentRoom();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!isStuned)
         {
@@ -26,12 +26,12 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    protected abstract void ChooseNextAction();
+    public void Stun(float duration) {
+        isStuned = true;
+        Invoke(nameof(UnStun), duration);
+    }
 
-    protected abstract void OnEnterRoom();
-
-    void UnStun()
-    {
+    void UnStun() {
         isStuned = false;
     }
 
@@ -40,15 +40,24 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     /// <param name="targetPoint">The position to reach.</param>
     /// <returns><b>True</b> if the targetPoint has been reached, <b>False</b> if it hasn't.</returns>
-    protected bool Move(Vector3 targetPoint)
-    {
+    protected bool Move(Vector3 targetPoint) {
         transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _baseSpeed / Vector3.Distance(targetPoint, transform.position));
         return transform.position == targetPoint;
     }
 
-    public void Stun(float duration)
-    {
-        isStuned = true;
-        Invoke(nameof(UnStun), duration);
+    protected Room FindCurrentRoom() {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
+        for (int i=0; i<hits.Length; i++) {
+            if (hits[i].collider.TryGetComponent(out Room room)) {
+                return room;
+            }
+        }
+        return null;
     }
+
+    protected abstract void ChooseNextAction();
+
+    protected abstract void OnEnterRoom(Room room);
+
+    protected abstract void OnExitRoom(Room room);
 }

@@ -83,7 +83,7 @@ public static class Bfs
             nodes[i].Clean();
         }
     }
-    static Node GetNode(Vector3 nodePos)
+    public static Node GetNode(Vector3 nodePos)
     {
         if (!nodeDic.ContainsKey(nodePos))
         {

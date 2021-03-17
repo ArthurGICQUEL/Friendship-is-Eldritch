@@ -6,7 +6,7 @@ public class Node
 {
     public bool visited;
     public List<Node> children;
-    Vector3 nodePos;
+    public Vector3 position;
     public Node Parent;
     public int Depth;
 
@@ -14,7 +14,7 @@ public class Node
     {
         children = new List<Node>();
         visited = false;
-        nodePos = pos;
+        position = pos;
         Clean();
     }
     public void Clean()
