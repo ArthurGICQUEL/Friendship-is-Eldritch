@@ -65,12 +65,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
         }
     }
     void IncMoonTime()
     {
-        timeOfNight = Time.time * 1;
-        Debug.Log(timeOfNight);
+        //timeOfNight = Time.time * 1;
+        //Debug.Log(timeOfNight);
     }
 }

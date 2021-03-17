@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : Character {
-    public MindState State {
+public class Human : Character
+{
+    public MindState State
+    {
         get { return _state; }
         set { SetMindState(value); }
     }
-    public float Sanity {
+    public float Sanity
+    {
         get { return _sanity; }
         set { _sanity = Mathf.Clamp(value, 0, sanityMax); OnSanityChange(); }
     }
@@ -26,8 +29,10 @@ public class Human : Character {
     float _stateTimer = 0, _idleStillTimer = 0;
 
 
-    protected override void ChooseNextAction() {
-        switch(State) {
+    protected override void ChooseNextAction()
+    {
+        switch (State)
+        {
             case MindState.Idle:
                 ActIdle();
                 break;
@@ -48,44 +53,55 @@ public class Human : Character {
         }
     }
 
-    void ActIdle() {
+    void ActIdle()
+    {
         _stateTimer -= Time.deltaTime;
-        if(_stateTimer <= 0) { // if the idleTimer expires, switch to Exploring
+        if (_stateTimer <= 0)
+        { // if the idleTimer expires, switch to Exploring
             State = MindState.Exploring;
             return;
         }
         // while the timer is ticking, wait a little bit then move to random positions in the room and repeat
-        if (_idleStillTimer > 0) {
+        if (_idleStillTimer > 0)
+        {
             _idleStillTimer -= Time.deltaTime;
         }
-        if (_idleStillTimer <= 0) {
-            if(Move(_inRoomTarget)) {
+        if (_idleStillTimer <= 0)
+        {
+            if (Move(_inRoomTarget))
+            {
                 _inRoomTarget = GetTargetInRoom();
                 _idleStillTimer = _idleStillDuration;
             }
         }
     }
 
-    void ActExploring() {
-        if(_targetDoor == null) {
+    void ActExploring()
+    {
+        if (_targetDoor == null)
+        {
             // get the available doors in the currentRoom without the last door used, unless it's the only door
             List<Door> availableDoors = new List<Door>(currentRoom.doors);
-            if(_lastDoor != null && availableDoors.Count > 1) {
+            if (_lastDoor != null && availableDoors.Count > 1)
+            {
                 availableDoors.Remove(_lastDoor);
             }
             // get a random door among the available ones
             Door nextDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             // pass the chosen door to all the humans in the room
             Human[] group = currentRoom.humans.ToArray();
-            for(int i = 0; i < group.Length; i++) {
+            for (int i = 0; i < group.Length; i++)
+            {
                 group[i]._targetDoor = nextDoor;
             }
         }
         MoveToTargetDoor();
     }
 
-    void ActPanicking() {
-        if(_targetDoor == null) {
+    void ActPanicking()
+    {
+        if (_targetDoor == null)
+        {
             // get the available doors in the currentRoom
             List<Door> availableDoors = new List<Door>(currentRoom.doors);
             // get a random door among the available ones
@@ -94,17 +110,22 @@ public class Human : Character {
         MoveToTargetDoor();
     }
 
-    void ActChased() {
-        if(_targetDoor == null) {
+    void ActChased()
+    {
+        if (_targetDoor == null)
+        {
             // get the available doors in the currentRoom that are opposite to the minions
             List<Door> availableDoors = new List<Door>();
-            for (int i=0; i< currentRoom.doors.Length; i++) {
-                if (!CheckIfMinionBlocksDoor(currentRoom.doors[i])) {
+            for (int i = 0; i < currentRoom.doors.Length; i++)
+            {
+                if (!CheckIfMinionBlocksDoor(currentRoom.doors[i]))
+                {
                     availableDoors.Add(currentRoom.doors[i]);
                 }
             }
             // get a random door among the available ones or stay frightened
-            if (availableDoors.Count > 0) {
+            if (availableDoors.Count > 0)
+            {
                 _targetDoor = availableDoors[Random.Range(0, availableDoors.Count)];
             }
         }
@@ -112,17 +133,22 @@ public class Human : Character {
         MoveToTargetDoor();
     }
 
-    void ActEnlightened() {
+    void ActEnlightened()
+    {
         // ???
     }
 
-    void MoveToTargetDoor() {
-        if(Move(_targetDoor.transform.position)) {
-            if(_lastDoor == null) {
+    void MoveToTargetDoor()
+    {
+        if (Move(_targetDoor.transform.position))
+        {
+            if (_lastDoor == null)
+            {
                 _lastDoor = _targetDoor;
             }
             // if the linked door to the current one is also the last one passed, then a new room has been reached
-            if(_lastDoor == _targetDoor.targetDoor) {
+            if (_lastDoor == _targetDoor.targetDoor)
+            {
                 State = MindState.Idle;
                 return;
             }
@@ -131,20 +157,25 @@ public class Human : Character {
         }
     }
 
-    Vector3 GetTargetInRoom() {
+    Vector3 GetTargetInRoom()
+    {
         return Vector3.Lerp(currentRoom.floorLimits[0], currentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
-    void OnSanityChange() {
+    void OnSanityChange()
+    {
         // if sanity becomes zero or smth
     }
 
-    protected override void OnEnterRoom() {
+    protected override void OnEnterRoom()
+    {
         // MAYBE: Reload idle time for all humans in room
     }
 
-    void SetMindState(MindState newState) {
-        switch(newState) {
+    void SetMindState(MindState newState)
+    {
+        switch (newState)
+        {
             case MindState.Idle:
                 _stateTimer = _idleDuration;
                 _inRoomTarget = transform.position;
@@ -174,11 +205,14 @@ public class Human : Character {
     /// </summary>
     /// <param name="door">The Door towards which raycasting.</param>
     /// <returns><b>True</b> if a minion is in the way.</returns>
-    bool CheckIfMinionBlocksDoor(Door door) {
+    bool CheckIfMinionBlocksDoor(Door door)
+    {
         Vector2 doorDir = door.transform.position - transform.position;
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, doorDir.normalized, doorDir.magnitude);
-        for (int i=0; i<hits.Length; i++) {
-            if (hits[i].collider.TryGetComponent(out Minion minion)) {
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.TryGetComponent(out Minion minion))
+            {
                 return true;
             }
         }
@@ -186,6 +220,7 @@ public class Human : Character {
     }
 }
 
-public enum MindState {
+public enum MindState
+{
     Idle = 0, Exploring = 1, Panicking = 2, Chased = 3, Enlightened = 4, Hunting = 10
 }
