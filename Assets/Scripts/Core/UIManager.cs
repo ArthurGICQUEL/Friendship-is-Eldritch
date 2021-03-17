@@ -9,7 +9,6 @@ public class UIManager : MonoBehaviour
 
     Spell selectedSpell;
     public Slider slider;
-    public Gradient gradient;
     public Image fill;
     
     [SerializeField] GameObject canvasSpellCasting;
@@ -27,11 +26,13 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        SetMaxHealth(GameManager.Instance.timeOfNight, GameManager.Instance.tTNight);
+        SetMaxTime(GameManager.Instance.timeOfNight, GameManager.Instance.tTNight);
     }
 
     private void Update()
     {
+        SetTime(GameManager.Instance.timeOfNight);
+        Debug.Log(slider.value);
         if (selectedSpell != null)
         {
             if (Input.GetMouseButtonDown(0))
@@ -44,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        SetHealth(GameManager.Instance.timeOfNight);
+       
     }
 
     public void OnRoomClick(Room room)
@@ -64,15 +65,13 @@ public class UIManager : MonoBehaviour
         selectedSpell = null;
         canvasSpellCasting.SetActive(false);
     }
-    public void SetMaxHealth(float time, float maxTime)
+    public void SetMaxTime(float time, float maxTime)
     {
         slider.maxValue = maxTime;
-        slider.value = time / maxTime;
-        fill.color = gradient.Evaluate(1f);
+        slider.value = time;
     }
-    public void SetHealth(float time)
+    public void SetTime(float time)
     {
         slider.value = time;
-        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

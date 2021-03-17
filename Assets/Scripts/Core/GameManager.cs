@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         timeOfNight = 0;
         for (int i = 0; i < nbStartHuman; i++)
         {
-            Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
+            //Instantiate((Human)Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
         }
     }
     private void Update()
@@ -71,6 +71,5 @@ public class GameManager : MonoBehaviour
     void IncMoonTime()
     {
         timeOfNight = Time.time * 1;
-        Debug.Log(timeOfNight);
     }
 }
