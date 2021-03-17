@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public Slider slider;
     public Image fill;
 
-    [SerializeField] GameObject canvasSpellCasting;
+    [SerializeField] GameObject canvasSpellCasting = null;
 
     private void Awake()
     {
@@ -32,7 +32,6 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         SetTime(GameManager.Instance.timeOfNight);
-        Debug.Log(slider.value);
         if (selectedSpell != null)
         {
             if (Input.GetMouseButtonDown(0))
@@ -67,9 +66,7 @@ public class UIManager : MonoBehaviour
     }
     public void SetMaxTime(float time, float maxTime)
     {
-        Debug.Log(maxTime);
         slider.maxValue = maxTime;
-        Debug.Log("MAX " + slider.maxValue);
         slider.value = time;
     }
     public void SetTime(float time)

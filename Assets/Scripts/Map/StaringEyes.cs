@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StaringEyes : MonoBehaviour
 {
-    [SerializeField] GameObject pupil;
-    [SerializeField] float eyeRadius;
+    [SerializeField] GameObject pupil = null;
+    [SerializeField] float eyeRadius = 0;
 
     private void FixedUpdate()
     {

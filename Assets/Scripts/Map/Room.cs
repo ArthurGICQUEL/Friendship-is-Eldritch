@@ -8,7 +8,7 @@ public class Room : MonoBehaviour
     [HideInInspector] public List<Human> humans;
     [HideInInspector] public List<Minion> minions;
     [HideInInspector] public Vector3[] floorLimits;
-    [SerializeField] Vector3[] floorLimitsOffset;
+    [SerializeField] Vector3[] floorLimitsOffset = null;
     public Bounds bounds;
     public bool isStartRoom;
 
