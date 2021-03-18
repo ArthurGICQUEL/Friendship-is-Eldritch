@@ -1445,8 +1445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b08d4239a869e940909bb90e5e0f657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderNight: {fileID: 0}
-  fillNight: {fileID: 0}
+  sliderNight: {fileID: 2067855785}
+  fillNight: {fileID: 1294739277}
   canvasSpellCasting: {fileID: 1240172036}
   buttonIllusion: {fileID: 1753629233}
   buttonPossession: {fileID: 1447490671}
@@ -1469,7 +1469,7 @@ MonoBehaviour:
   totalNightSteps: 3
   instMoon: {fileID: 0}
   nbStartHuman: 5
-  startRoom: {fileID: 0}
+  startRoom: {fileID: 1622832201}
   timeOfNight: 0
   tTNight: 30
   timerTime: 1
