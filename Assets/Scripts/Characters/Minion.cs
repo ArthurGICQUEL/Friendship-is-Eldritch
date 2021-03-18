@@ -24,8 +24,10 @@ public class Minion : Character
         if (Move(_targetPos))
         {
             CurrentRoom = FindCurrentRoom();
-            _targetNode = Bfs.GetNextNode(CurrentRoom.GetMiddleFloor(), _prey.CurrentRoom.GetMiddleFloor());
-            _targetPos = _targetNode.position;
+            _targetNode = Bfs.GetNextNode(Bfs.GetNode(_targetPos), _prey._targetNode);
+            if (_targetNode != null) {
+                _targetPos = _targetNode.position;
+            }
         }
     }
 

@@ -25,7 +25,7 @@ public class Human : Character
     float _sanity = 1;
     MindState _state = MindState.Idle;
     //Minion _hunter = null;
-    Room _targetRoom = null, _lastRoom = null;
+    Room _targetRoom = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0;
 
@@ -155,7 +155,6 @@ public class Human : Character
     void MoveToTargetRoom()
     {
         if (_targetNode == null) { return; }
-        CurrentRoom = FindCurrentRoom();
         if (Move(_targetNode.position)) {
             if (_targetRoom == null || _targetNode == null) {
                 Debug.LogWarning($"_targetRoom: {_targetRoom}; _targetNode: {_targetNode}");
@@ -245,6 +244,8 @@ public class Human : Character
             default:
                 break;
         }
+        _anim.SetInteger("MindState", (int)newState);
+        _anim.speed = _baseSpeed * _speedRatio;
         _targetRoom = null;
         _state = newState;
     }
