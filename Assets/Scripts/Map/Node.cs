@@ -22,4 +22,8 @@ public class Node
         Parent = null;
         Depth = -1;
     }
+
+    public override string ToString() {
+        return $"Node({position})";
+    }
 }
