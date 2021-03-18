@@ -46,9 +46,21 @@ public class UIManager : MonoBehaviour
     public void UpdateUI()
     {
         manaTxt.text = "Power : " + GameManager.Instance.Mana + " / " + GameManager.Instance.ManaMax;
-        //if (GameManager.Instance.Mana >= Illusion.illusionCost)
-        //  if (GameManager.Instance.Mana >= Possession.possessionCost)
-        //    if (GameManager.Instance.Mana >= Summon.summonCost)
+        if (GameManager.Instance.Mana < Illusion.illusionCost)
+        {
+            buttonIllusion.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else buttonIllusion.transform.GetChild(1).gameObject.SetActive(false);
+        if (GameManager.Instance.Mana < Possession.possessionCost)
+        {
+            buttonPossession.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else buttonPossession.transform.GetChild(1).gameObject.SetActive(false);
+        if (GameManager.Instance.Mana < Summon.summonCost)
+        {
+            buttonSummon.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else buttonSummon.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void OnRoomClick(Room room)
