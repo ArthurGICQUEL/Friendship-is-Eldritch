@@ -47,20 +47,14 @@ public class UIManager : MonoBehaviour
             {
                 for (int i = 0; i < rooms.Length; i++)
                 {
-                    if (rooms[i].humans.Count > 0)
-                    {
-                        rooms[i].HilightedBorders.SetActive(true);
-                    }
+                    rooms[i].HilightedBorders.SetActive(rooms[i].humans.Count > 0);
                 }
             }
             if (selectedSpell is Summon)
             {
                 for (int i = 0; i < rooms.Length; i++)
                 {
-                    if (rooms[i].humans.Count == 0)
-                    {
-                        rooms[i].HilightedBorders.SetActive(true);
-                    }
+                    rooms[i].HilightedBorders.SetActive(rooms[i].humans.Count == 0);
                 }
             }
         }
@@ -95,10 +89,10 @@ public class UIManager : MonoBehaviour
     public void OnSpellClick(int spell)
     {
         {
-            selectedSpell = Spell.GetSpell((SpellType)spell);
-            Debug.Log(selectedSpell.cost);
-            if (selectedSpell.cost < GameManager.Instance.Mana)
+            Spell tryToselect = Spell.GetSpell((SpellType)spell);
+            if (tryToselect.cost <= GameManager.Instance.Mana)
             {
+                selectedSpell = tryToselect;
                 canvasSpellCasting.SetActive(true);
             }
         }
