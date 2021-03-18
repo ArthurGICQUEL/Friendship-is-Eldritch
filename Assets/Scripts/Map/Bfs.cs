@@ -75,6 +75,7 @@ public static class Bfs
                 }
             }
         }
+        CleanNodes();
         return null;
     }
     static List<Node> GetParentPath(Node node, List<Node> path = null)
