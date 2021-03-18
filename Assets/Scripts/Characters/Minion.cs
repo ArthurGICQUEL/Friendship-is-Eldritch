@@ -5,7 +5,7 @@ using UnityEngine;
 public class Minion : Character
 {
     Human _prey = null;
-    Queue<Node> _targetTrail = new Queue<Node>();
+    //Queue<Node> _targetTrail = new Queue<Node>();
 
     private void Start()
     {
