@@ -24,7 +24,7 @@ public class Moon : MonoBehaviour
     {
         Transform m = objectToMove.transform;
         Vector3 center = (targets[0].transform.position + targets[1].transform.position) * 0.5F;
-        center -= new Vector3(0, 50, 0);
+        center -= new Vector3(0, 250, 0);
         Vector3 riseRelCenter = targets[0].transform.position - center;
         Vector3 setRelCenter = targets[1].transform.position - center;
         m.position = Vector3.Slerp(riseRelCenter, setRelCenter, GameManager.Instance.timeOfNight / GameManager.Instance.tTNight);
