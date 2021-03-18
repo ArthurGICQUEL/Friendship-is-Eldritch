@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefab/E_Minion.prefab.meta
+guid: 0eb562e81fdf696409c9b453649dc8a6
+PrefabImporter:
+=======
 guid: 55e712785c4429b40a884a66added526
 folderAsset: yes
 DefaultImporter:
+>>>>>>> 1dc3c8c3b291ae01f736b9e299d8d2e856ed3281:Assets/Sprites/Animations/Character1/Exploring.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

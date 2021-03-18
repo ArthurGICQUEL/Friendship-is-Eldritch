@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Possession : Spell
 {
+    public const int possessionCost = 5;
     public float stunTime = 3f;
+    public Possession() : base()
+    {
+        cost = possessionCost;
+    }
     public override bool Cast()
     {
         if (target.humans.Count == 0) return false;
@@ -17,6 +22,7 @@ public class Possession : Spell
         {
             humans[i].State = MindState.Panicking;
         }
+        GameManager.Instance.Mana -= cost;
         return true;
     }
 }

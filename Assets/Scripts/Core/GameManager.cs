@@ -6,13 +6,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] GameObject moonPrefab = null;
+    [SerializeField] int totalNightSteps = 3;
     [HideInInspector] public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
-    public float timeOfNight, tTNight = 60f;
+    public float timeOfNight, tTNight = 60f, timerTime = 1;
+    float timer;
+    int nightStep = 0;
 
 
-    public float Mana
+    public int Mana
     {
         get { return _mana; }
         set
@@ -21,8 +24,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.UpdateUI();
         }
     }
-    float _mana;
-    public float ManaMax
+    int _mana;
+    public int ManaMax
     {
         get { return _manaMax; }
         set
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.UpdateUI();
         }
     }
-    float _manaMax;
+    int _manaMax;
 
 
     private void Awake()
@@ -47,11 +50,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Start() 
+    private void Start()
     {
         Bfs.InitGraph();
-
-        Time.timeScale = 1;
         instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
         timeOfNight = 0;
         for (int i = 0; i < nbStartHuman; i++)
@@ -63,15 +64,26 @@ public class GameManager : MonoBehaviour
     {
         if (timeOfNight < tTNight)
         {
-            IncMoonTime();
+            timeOfNight += Time.deltaTime;
         }
         else
         {
-            //Time.timeScale = 0;
+            //EndGame();
         }
-    }
-    void IncMoonTime()
-    {
-        timeOfNight = Time.time * 1;
+
+
+        if (Mana < ManaMax && timer >= timerTime)
+        {
+            Mana += 1;
+            timer = 0;
+        }
+        timer += Time.deltaTime;
+
+        if (timeOfNight / tTNight >= nightStep / (float)totalNightSteps)
+        {
+            ManaMax += 3;
+            Mana = ManaMax;
+            nightStep++;
+        }
     }
 }

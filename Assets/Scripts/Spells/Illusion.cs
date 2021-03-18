@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Illusion : Spell
 {
+    public const int illusionCost = 2;
     public float power = 1f;
+    public Illusion() : base()
+    {
+        cost = illusionCost;
+    }
     public override bool Cast()
     {
         if (target.humans.Count == 0) return false;
@@ -14,6 +19,7 @@ public class Illusion : Spell
         {
             target.humans[i].Sanity += power / nbHumans;
         }
+        GameManager.Instance.Mana -= cost;
         return true;
     }
 }

@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefab/E_Possession.prefab.meta
+guid: 69d204e8350ec7f4982a02dff1141d9e
+PrefabImporter:
+=======
 guid: ea2a1815132acba4196ed06cb21d501c
 folderAsset: yes
 DefaultImporter:
+>>>>>>> 1dc3c8c3b291ae01f736b9e299d8d2e856ed3281:Assets/Sprites/Animations/Character1/Idle.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
