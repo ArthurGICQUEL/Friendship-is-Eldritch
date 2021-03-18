@@ -5,7 +5,7 @@ using UnityEngine;
 public class Illusion : Spell
 {
     public const int illusionCost = 2;
-    public float power = 1f;
+    public float power = 1 / 3f;
     public Illusion() : base()
     {
         cost = illusionCost;
@@ -17,7 +17,7 @@ public class Illusion : Spell
         int nbHumans = target.humans.Count;
         for (int i = 0; i < nbHumans; i++)
         {
-            target.humans[i].Sanity += power / nbHumans;
+            target.humans[i].Sanity -= power / nbHumans;
         }
         GameManager.Instance.Mana -= cost;
         return true;

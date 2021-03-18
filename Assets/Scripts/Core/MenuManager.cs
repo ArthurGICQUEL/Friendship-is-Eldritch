@@ -13,6 +13,8 @@ public class MenuManager : MonoBehaviour
     public GameObject go;
     public GameObject ambiancesound;
     public GameObject gosound;
+    public GameObject panelreg;
+    public GameObject panelcredits;
 
     public void OnClick_Start()
     {
@@ -55,5 +57,21 @@ public class MenuManager : MonoBehaviour
     {
         explications2.SetActive(false);
         go.SetActive(true);
+    }
+
+    public void Panelreg()
+    {
+        panelreg.SetActive(true);
+    }
+
+    public void Panelcredits()
+    {
+        panelcredits.SetActive(true);
+    }
+
+    public void Menu()
+    {
+        panelreg.SetActive(false);
+        panelcredits.SetActive(false);
     }
 }
