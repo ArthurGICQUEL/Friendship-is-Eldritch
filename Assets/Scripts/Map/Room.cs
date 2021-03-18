@@ -28,11 +28,11 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        if (isStartRoom) GameManager.Instance.startRoom = this;
+        //if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
     private void Update() {
-        Debug.LogWarning($"{name} has {humans.Count} humans.");
+        //Debug.LogWarning($"{name} has {humans.Count} humans.");
     }
 
     public Vector3 GetMiddleFloor()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Human : Character
 {
@@ -32,6 +33,7 @@ public class Human : Character
     private void Start()
     {
         State = MindState.Idle;
+        OnSanityChange();
     }
 
     protected override void ChooseNextAction()
@@ -70,13 +72,17 @@ public class Human : Character
         if (_idleStillTimer > 0)
         {
             _idleStillTimer -= Time.deltaTime;
+            // start moving
+            _anim.SetInteger("MindState", (int)MindState.Exploring);
         }
         if (_idleStillTimer <= 0)
         {
             if (Move(_inRoomTarget))
             {
                 _inRoomTarget = GetTargetInRoom();
+                // stop moving for now
                 _idleStillTimer = _idleStillDuration;
+                _anim.SetInteger("MindState", (int)MindState.Idle);
             }
         }
     }
@@ -95,7 +101,7 @@ public class Human : Character
             Room nextRoom = availableRooms[Random.Range(0, availableRooms.Count)];
             // pass the chosen room to all the humans in the room
             Human[] group = CurrentRoom.humans.ToArray();
-            Debug.LogWarning($"GroupSize = {group.Length}");
+            //Debug.LogWarning($"GroupSize = {group.Length}");
             for (int i = 0; i < group.Length; i++)
             {
                 group[i].State = MindState.Exploring;
@@ -103,8 +109,9 @@ public class Human : Character
                 group[i]._targetNode = Bfs.GetNode(group[i].CurrentRoom.GetMiddleFloor());
             }
         }
-        if (_targetRoom == null) {
-            Debug.LogWarning($"{name} doesn't have a target door.");
+        if (_targetRoom == null)
+        {
+            //Debug.LogWarning($"{name} doesn't have a target door.");
         }
         MoveToTargetRoom();
     }
@@ -155,11 +162,14 @@ public class Human : Character
     void MoveToTargetRoom()
     {
         if (_targetNode == null) { return; }
-        if (Move(_targetNode.position)) {
-            if (_targetRoom == null || _targetNode == null) {
+        if (Move(_targetNode.position))
+        {
+            if (_targetRoom == null || _targetNode == null)
+            {
                 Debug.LogWarning($"_targetRoom: {_targetRoom}; _targetNode: {_targetNode}");
             }
-            if (_targetRoom.GetMiddleFloor() == _targetNode.position) {
+            if (_targetRoom.GetMiddleFloor() == _targetNode.position)
+            {
                 _lastRoom = CurrentRoom;
                 //CurrentRoom = _targetRoom;
                 State = MindState.Idle;
@@ -175,15 +185,19 @@ public class Human : Character
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
-    protected Node FindNextNode() {
+    protected Node FindNextNode()
+    {
         return Bfs.GetNextNode(_targetNode.position, _targetRoom.GetMiddleFloor());
     }
 
-    List<Room> GetAvailableRooms(List<Door> availableDoors = null) {
+    List<Room> GetAvailableRooms(List<Door> availableDoors = null)
+    {
         Door[] roomDoors = availableDoors != null ? availableDoors.ToArray() : CurrentRoom.doors;
         List<Room> availableRooms = new List<Room>();
-        for(int i = 0; i < roomDoors.Length; i++) {
-            if(!availableRooms.Contains(roomDoors[i].targetDoor.room)) {
+        for (int i = 0; i < roomDoors.Length; i++)
+        {
+            if (!availableRooms.Contains(roomDoors[i].targetDoor.room))
+            {
                 availableRooms.Add(roomDoors[i].targetDoor.room);
             }
         }
@@ -192,10 +206,15 @@ public class Human : Character
 
     void OnSanityChange()
     {
-        // if sanity becomes zero or smth
+        GetComponentInChildren<Slider>().value = Sanity;
+        if (Sanity == 0)
+        {
+            State = MindState.Enlightened;
+        }
     }
 
-    protected override void UnStun() {
+    protected override void UnStun()
+    {
         base.UnStun();
         State = MindState.Idle;
     }
