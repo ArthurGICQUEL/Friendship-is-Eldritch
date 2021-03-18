@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Room : MonoBehaviour
     [SerializeField] Vector3[] floorLimitsOffset = null;
     public Bounds bounds;
     public bool isStartRoom;
+    public GameObject HilightedBorders;
 
 
     private void Awake()
@@ -23,7 +25,7 @@ public class Room : MonoBehaviour
             floorLimits[i] = floorLimitsOffset[i] + transform.position;
         }
 
-        
+
     }
 
     private void Start()
@@ -31,7 +33,8 @@ public class Room : MonoBehaviour
         //if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
-    private void Update() {
+    private void Update()
+    {
         //Debug.LogWarning($"{name} has {humans.Count} humans.");
     }
 

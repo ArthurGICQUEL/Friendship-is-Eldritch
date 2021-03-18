@@ -14,6 +14,30 @@ public class MenuManager : MonoBehaviour
     public GameObject ambiancesound;
     public GameObject gosound;
 
+
+
+
+    [SerializeField] GameObject imageWin, imageLose;
+
+    private void Update()
+    {
+        Debug.Log(GameManager.Instance.win);
+        Debug.Log("lal");
+        if (GameManager.Instance.gameHasEnded)
+        {
+            if (GameManager.Instance.win)
+            {
+                imageWin.SetActive(true);
+            }
+            else imageLose.SetActive(true);
+        }
+    }
+    public void LoadScene(int scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
+
     public void OnClick_Start()
     {
         ambiancesound.SetActive(false);

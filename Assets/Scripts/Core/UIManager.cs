@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     Spell selectedSpell;
     public Slider sliderNight;
     public Image fillNight;
+    Room[] rooms;
 
     [SerializeField] GameObject canvasSpellCasting = null, buttonIllusion, buttonPossession, buttonSummon;
     [SerializeField] Text manaTxt;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         SetMaxTime(GameManager.Instance.timeOfNight, GameManager.Instance.tTNight);
+        rooms = FindObjectsOfType<Room>();
     }
 
     private void Update()
@@ -39,6 +41,27 @@ public class UIManager : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null && hit.collider.TryGetComponent(out Room room)) OnRoomClick(room);
+            }
+
+            if (selectedSpell is Illusion || selectedSpell is Possession)
+            {
+                for (int i = 0; i < rooms.Length; i++)
+                {
+                    if (rooms[i].humans.Count > 0)
+                    {
+                        rooms[i].HilightedBorders.SetActive(true);
+                    }
+                }
+            }
+            if (selectedSpell is Summon)
+            {
+                for (int i = 0; i < rooms.Length; i++)
+                {
+                    if (rooms[i].humans.Count == 0)
+                    {
+                        rooms[i].HilightedBorders.SetActive(true);
+                    }
+                }
             }
         }
     }
@@ -85,6 +108,10 @@ public class UIManager : MonoBehaviour
     {
         selectedSpell = null;
         canvasSpellCasting.SetActive(false);
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            rooms[i].HilightedBorders.SetActive(false);
+        }
     }
     public void SetMaxTime(float time, float maxTime)
     {
