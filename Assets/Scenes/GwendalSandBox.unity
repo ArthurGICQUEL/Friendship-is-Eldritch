@@ -150,9 +150,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b08d4239a869e940909bb90e5e0f657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 79636405}
-  fill: {fileID: 1946212255}
+  sliderNight: {fileID: 0}
+  fillNight: {fileID: 0}
   canvasSpellCasting: {fileID: 0}
+  buttonIllusion: {fileID: 0}
+  buttonPossession: {fileID: 0}
+  buttonSummon: {fileID: 0}
+  manaTxt: {fileID: 0}
 --- !u!4 &39397357
 Transform:
   m_ObjectHideFlags: 0
@@ -287,11 +291,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moonPrefab: {fileID: 8832357862916632990, guid: 6b4c4b75efd64fb449c8e166bf98e78f,
     type: 3}
+  totalNightSteps: 3
   instMoon: {fileID: 0}
   nbStartHuman: 5
   startRoom: {fileID: 0}
   timeOfNight: 0
   tTNight: 60
+  timerTime: 1
 --- !u!4 &522018822
 Transform:
   m_ObjectHideFlags: 0
@@ -3862,7 +3868,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0.24746348, g: 0.53228015, b: 0.6320754, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4068,6 +4074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Summon
+      objectReference: {fileID: 0}
+    - target: {fileID: 216150345767236310, guid: 494dd568319913b4f8f0f0ada5216f89,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 216150345767236313, guid: 494dd568319913b4f8f0f0ada5216f89,
         type: 3}
