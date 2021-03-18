@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2989237318437777414}
   - component: {fileID: 4413152000963057733}
   - component: {fileID: 2541099432182754962}
+  - component: {fileID: 3342394150261714073}
   m_Layer: 0
   m_Name: Villain
   m_TagString: Untagged
@@ -44,10 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe18352dc151a24b823e562ce5bff04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 0}
   isStuned: 0
-  _speed: 1
-  _idleTime: 1
+  _baseSpeed: 3
 --- !u!212 &2541099432182754962
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,3 +97,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3342394150261714073
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833369776689118784}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2386c93f901271a4088e3224367b43e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

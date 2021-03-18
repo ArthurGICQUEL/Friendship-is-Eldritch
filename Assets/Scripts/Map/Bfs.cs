@@ -14,7 +14,7 @@ public static class Bfs
         {
             nodeDic[doors[i].transform.position] = new Node(doors[i].transform.position);
             Vector3 roomPos = doors[i].room.GetMiddleFloor();
-            Debug.LogWarning(roomPos);
+            //Debug.LogWarning(roomPos);
             if (!nodeDic.ContainsKey(roomPos)) {
                 nodeDic[roomPos] = new Node(roomPos);
             }
