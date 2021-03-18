@@ -74,4 +74,9 @@ public class MenuManager : MonoBehaviour
         panelreg.SetActive(false);
         panelcredits.SetActive(false);
     }
+
+    public void OnClick_Exit()
+    {
+        Application.Quit();
+    }
 }
