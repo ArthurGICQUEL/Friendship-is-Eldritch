@@ -8,10 +8,11 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     Spell selectedSpell;
-    public Slider slider;
-    public Image fill;
+    public Slider sliderNight;
+    public Image fillNight;
 
-    [SerializeField] GameObject canvasSpellCasting = null;
+    [SerializeField] GameObject canvasSpellCasting = null, buttonIllusion, buttonPossession, buttonSummon;
+    [SerializeField] Text manaTxt;
 
     private void Awake()
     {
@@ -44,19 +45,28 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-
+        manaTxt.text = "Power : " + GameManager.Instance.Mana + " / " + GameManager.Instance.ManaMax;
+        //if (GameManager.Instance.Mana >= Illusion.illusionCost)
+        //  if (GameManager.Instance.Mana >= Possession.possessionCost)
+        //    if (GameManager.Instance.Mana >= Summon.summonCost)
     }
 
     public void OnRoomClick(Room room)
     {
         selectedSpell.target = room;
-        if (selectedSpell.Cast()) DeselectSpell();
+        if (selectedSpell.cost <= GameManager.Instance.Mana && selectedSpell.Cast()) DeselectSpell();
     }
 
     public void OnSpellClick(int spell)
     {
-        selectedSpell = Spell.GetSpell((SpellType)spell);
-        canvasSpellCasting.SetActive(true);
+        {
+            selectedSpell = Spell.GetSpell((SpellType)spell);
+            Debug.Log(selectedSpell.cost);
+            if (selectedSpell.cost < GameManager.Instance.Mana)
+            {
+                canvasSpellCasting.SetActive(true);
+            }
+        }
     }
 
     public void DeselectSpell()
@@ -66,11 +76,11 @@ public class UIManager : MonoBehaviour
     }
     public void SetMaxTime(float time, float maxTime)
     {
-        slider.maxValue = maxTime;
-        slider.value = time;
+        sliderNight.maxValue = maxTime;
+        sliderNight.value = time;
     }
     public void SetTime(float time)
     {
-        slider.value = time;
+        sliderNight.value = time;
     }
 }

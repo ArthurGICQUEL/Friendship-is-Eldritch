@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Spell
 {
-    public float cost;
+    public int cost;
     public Room target;
     public abstract bool Cast();
 
