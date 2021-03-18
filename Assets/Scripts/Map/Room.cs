@@ -23,6 +23,11 @@ public class Room : MonoBehaviour
             floorLimits[i] = floorLimitsOffset[i] + transform.position;
         }
 
+        
+    }
+
+    private void Start()
+    {
         if (isStartRoom) GameManager.Instance.startRoom = this;
     }
 
