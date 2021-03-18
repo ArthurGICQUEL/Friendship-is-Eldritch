@@ -13,7 +13,13 @@ public class Human : Character
     public float Sanity
     {
         get { return _sanity; }
-        set { _sanity = Mathf.Clamp(value, 0, sanityMax); OnSanityChange(); }
+        set { _sanity = Mathf.Clamp(value, 0, _sanityMax); OnSanityChange(); }
+    }
+    public bool IsEnlightened {
+        get { return State == MindState.Enlightened; }
+    }
+    public bool IsPossessed {
+        get { return State == MindState.Enlightened; }
     }
 
     [SerializeField] float _speedRatioIdle = 0.5f;
@@ -22,18 +28,32 @@ public class Human : Character
     [SerializeField] float _speedRatioChased = 2f;
     [SerializeField] float _idleDuration = 10;
     [SerializeField] float _idleStillDuration = 1;
-    [SerializeField] float sanityMax = 1;
+    [SerializeField] float _sanityMax = 1;
+    float _possessedDuration;
     float _sanity = 1;
+    Slider _sanitySlider;
     MindState _state = MindState.Idle;
     //Minion _hunter = null;
     Room _targetRoom = null;
     Vector3 _inRoomTarget;
-    float _stateTimer = 0, _idleStillTimer = 0;
+    float _stateTimer = 0, _idleStillTimer = 0, _possessedTimer = 0;
+
+    protected override void Awake() {
+        base.Awake();
+        _sanitySlider = GetComponentInChildren<Slider>();
+        Sanity = _sanityMax;
+
+        //_lastNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+    }
 
     private void Start()
     {
         State = MindState.Idle;
-        OnSanityChange();
+    }
+
+    public void Possess(float duration) {
+        _possessedDuration = duration;
+        State = MindState.Possessed;
     }
 
     protected override void ChooseNextAction()
@@ -54,6 +74,9 @@ public class Human : Character
                 break;
             case MindState.Enlightened:
                 ActEnlightened();
+                break;
+            case MindState.Possessed:
+                ActPossessed();
                 break;
             default:
                 break;
@@ -100,13 +123,15 @@ public class Human : Character
             // get a random room among the available ones
             Room nextRoom = availableRooms[Random.Range(0, availableRooms.Count)];
             // pass the chosen room to all the humans in the room
-            Human[] group = CurrentRoom.humans.ToArray();
-            //Debug.LogWarning($"GroupSize = {group.Length}");
+            Human[] group = CurrentRoom.GetAvailableHumans().ToArray();
+            //Debug.LogWarning($"GroupSize = {group.Length}; NextRoom: {nextRoom}");
             for (int i = 0; i < group.Length; i++)
             {
                 group[i].State = MindState.Exploring;
                 group[i]._targetRoom = nextRoom;
-                group[i]._targetNode = Bfs.GetNode(group[i].CurrentRoom.GetMiddleFloor());
+                group[i]._lastNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+                //Debug.Log("LastNode: " + group[i]._lastNode);
+                group[i]._targetNode = group[i].FindNextNode();
             }
         }
         if (_targetRoom == null)
@@ -124,7 +149,7 @@ public class Human : Character
             List<Room> availableRooms = GetAvailableRooms();
             // get a random room among the available ones
             _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
-            _targetNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+            _targetNode = FindNextNode();
         }
         MoveToTargetRoom();
     }
@@ -148,7 +173,7 @@ public class Human : Character
             if (availableRooms.Count > 0)
             {
                 _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
-                _targetNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+                _targetNode = FindNextNode();
             }
         }
         MoveToTargetRoom();
@@ -159,15 +184,19 @@ public class Human : Character
         // ???
     }
 
+    void ActPossessed() {
+        _possessedTimer -= Time.deltaTime;
+        if (_possessedTimer <= 0) {
+            State = MindState.Idle;
+        }
+    }
+
     void MoveToTargetRoom()
     {
         if (_targetNode == null) { return; }
         if (Move(_targetNode.position))
         {
-            if (_targetRoom == null || _targetNode == null)
-            {
-                Debug.LogWarning($"_targetRoom: {_targetRoom}; _targetNode: {_targetNode}");
-            }
+            _lastNode = _targetNode;
             if (_targetRoom.GetMiddleFloor() == _targetNode.position)
             {
                 _lastRoom = CurrentRoom;
@@ -175,7 +204,7 @@ public class Human : Character
                 State = MindState.Idle;
                 return;
             }
-            _lastNode = _targetNode;
+            //_lastNode = _targetNode;
             _targetNode = FindNextNode();
         }
     }
@@ -187,7 +216,8 @@ public class Human : Character
 
     protected Node FindNextNode()
     {
-        return Bfs.GetNextNode(_targetNode.position, _targetRoom.GetMiddleFloor());
+        //Debug.Log($"lastNode: {_lastNode}; targetRoom: {_targetRoom}");
+        return Bfs.GetNextNode(_lastNode.position, _targetRoom.GetMiddleFloor());
     }
 
     List<Room> GetAvailableRooms(List<Door> availableDoors = null)
@@ -206,17 +236,11 @@ public class Human : Character
 
     void OnSanityChange()
     {
-        GetComponentInChildren<Slider>().value = Sanity;
+        _sanitySlider.value = Sanity;
         if (Sanity == 0)
         {
             State = MindState.Enlightened;
         }
-    }
-
-    protected override void UnStun()
-    {
-        base.UnStun();
-        State = MindState.Idle;
     }
 
     protected override void OnEnterRoom(Room room)
@@ -235,7 +259,8 @@ public class Human : Character
         if (room.humans.Contains(this))
         {
             room.humans.Remove(this);
-            Debug.LogWarning($"a human left {room.name}");
+            _currentRoom = null;
+            //Debug.LogWarning($"a human left {room.name}");
         }
     }
 
@@ -258,7 +283,10 @@ public class Human : Character
                 _speedRatio = _speedRatioChased;
                 break;
             case MindState.Enlightened:
-                // ???
+                GameManager.Instance.EndGame();
+                break;
+            case MindState.Possessed:
+                _possessedTimer = _possessedDuration;
                 break;
             default:
                 break;
@@ -291,5 +319,5 @@ public class Human : Character
 
 public enum MindState
 {
-    Idle = 0, Exploring = 1, Panicking = 2, Chased = 3, Enlightened = 4, Hunting = 10
+    Idle = 0, Exploring = 1, Panicking = 2, Chased = 3, Enlightened = 4, Possessed = 5
 }

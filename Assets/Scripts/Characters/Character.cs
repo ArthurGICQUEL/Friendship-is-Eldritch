@@ -12,7 +12,6 @@ public abstract class Character : MonoBehaviour
         }
     }
     [HideInInspector] public Node _targetNode = null, _lastNode = null;
-    public bool isStuned = false;
 
     protected float Speed { 
         get { return _baseSpeed * _speedRatio; } 
@@ -27,7 +26,7 @@ public abstract class Character : MonoBehaviour
     SpriteRenderer _sr;
     Vector3 _lastPos;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
@@ -42,27 +41,12 @@ public abstract class Character : MonoBehaviour
         if (dir.x > 0) { _sr.flipX = true; }
         else if (dir.x < 0) { _sr.flipX = false; }
         _lastPos = transform.position;
-        // behaviour actions
-        if (!isStuned)
-        {
-            // Find current room
-            Room room = FindCurrentRoom();
-            if(room != CurrentRoom) { _lastRoom = CurrentRoom; }
-            CurrentRoom = room;
-            // act on behavior
-            ChooseNextAction();
-        }
-    }
-
-    public void Stun(float duration)
-    {
-        isStuned = true;
-        Invoke(nameof(UnStun), duration);
-    }
-
-    protected virtual void UnStun()
-    {
-        isStuned = false;
+        // Find current room
+        Room room = FindCurrentRoom();
+        if(room != CurrentRoom) { _lastRoom = CurrentRoom; }
+        CurrentRoom = room;
+        // act on behavior
+        ChooseNextAction();
     }
 
     /// <summary>

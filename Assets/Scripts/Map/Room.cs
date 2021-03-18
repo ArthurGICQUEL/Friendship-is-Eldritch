@@ -38,6 +38,16 @@ public class Room : MonoBehaviour
         //Debug.LogWarning($"{name} has {humans.Count} humans.");
     }
 
+    public List<Human> GetAvailableHumans() {
+        List<Human> listHumans = new List<Human>(humans);
+        for(int i = 0; i < humans.Count; i++) {
+            if(humans[i].IsPossessed || humans[i].IsEnlightened) {
+                listHumans.Remove(humans[i]);
+            }
+        }
+        return listHumans;
+    }
+
     public Vector3 GetMiddleFloor()
     {
         return Vector3.Lerp(floorLimits[0], floorLimits[1], 0.5f);

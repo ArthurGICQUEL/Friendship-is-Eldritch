@@ -16,17 +16,29 @@ public class Minion : Character
     protected override void ChooseNextAction()
     {
         if (_prey == null) { return; }
-        /*Vector3 vPrey = _prey.transform.position - transform.position;
-        Vector3 vNode = _targetNode.position - transform.position;
-        if(vPrey.normalized == vNode.normalized && vPrey.magnitude < vNode.magnitude) {
+        // frighten the humans in the room its in
+        if (CurrentRoom != null) {
+            List<Human> humans = CurrentRoom.GetAvailableHumans();
+            for (int i=0; i<humans.Count; i++) {
+                if (humans[i].State != MindState.Chased) {
+                    humans[i].State = MindState.Chased;
+                }
+            }
+        }
+        if (_prey.CurrentRoom == CurrentRoom 
+            || (_prey._targetNode == _targetNode && _prey._lastNode == _lastNode) 
+            || (_prey._targetNode == _lastNode && _prey._lastNode == _targetNode)) {
             _targetPos = _prey.transform.position;
-        }*/
+        }
         if (Move(_targetPos))
         {
             CurrentRoom = FindCurrentRoom();
-            _targetNode = Bfs.GetNextNode(Bfs.GetNode(_targetPos), _prey._targetNode);
+            _targetNode = Bfs.GetNextNode(_targetPos, _prey._targetNode.position);
+            //Debug.Log($"targetNode: {_targetNode}");
             if (_targetNode != null) {
                 _targetPos = _targetNode.position;
+            } else {
+                _targetPos = _prey.transform.position;
             }
         }
     }
@@ -47,6 +59,7 @@ public class Minion : Character
         if (room.minions.Contains(this))
         {
             room.minions.Remove(this);
+            _currentRoom = null;
         }
     }
 
@@ -62,7 +75,7 @@ public class Minion : Character
         {
             if (human == _prey)
             {
-                Debug.Log("Crunchy crunch, the prey has been eaten!"); // TODO: eat the human
+                Debug.LogWarning("Crunchy crunch, the prey has been eaten!"); // TODO: eat the human
             }
         }
     }
