@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public float timeOfNight, tTNight = 60f, timerTime = 1;
     float timer;
     int nightStep = 0;
-
+    bool gameHasEnded = false;
 
     public int Mana
     {
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //EndGame();
+            EndGame();
         }
 
 
@@ -84,6 +84,23 @@ public class GameManager : MonoBehaviour
             ManaMax += 3;
             Mana = ManaMax;
             nightStep++;
+        }
+    }
+
+    public void EndGame() {
+        if (gameHasEnded) { return; }
+        gameHasEnded = true;
+        Human[] humans = FindObjectsOfType<Human>();
+        bool notAllPossessed = false;
+        for (int i=0; i<humans.Length; i++) {
+            if (humans[i].State != MindState.Enlightened) {
+                notAllPossessed = true;
+            }
+        }
+        if (notAllPossessed) {
+            // lose the game
+        } else {
+            // win the game
         }
     }
 }
