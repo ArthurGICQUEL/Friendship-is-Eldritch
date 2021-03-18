@@ -70,13 +70,17 @@ public class Human : Character
         if (_idleStillTimer > 0)
         {
             _idleStillTimer -= Time.deltaTime;
+            // start moving
+            _anim.SetInteger("MindState", (int)MindState.Exploring);
         }
         if (_idleStillTimer <= 0)
         {
             if (Move(_inRoomTarget))
             {
                 _inRoomTarget = GetTargetInRoom();
+                // stop moving for now
                 _idleStillTimer = _idleStillDuration;
+                _anim.SetInteger("MindState", (int)MindState.Idle);
             }
         }
     }
@@ -95,7 +99,7 @@ public class Human : Character
             Room nextRoom = availableRooms[Random.Range(0, availableRooms.Count)];
             // pass the chosen room to all the humans in the room
             Human[] group = CurrentRoom.humans.ToArray();
-            Debug.LogWarning($"GroupSize = {group.Length}");
+            //Debug.LogWarning($"GroupSize = {group.Length}");
             for (int i = 0; i < group.Length; i++)
             {
                 group[i].State = MindState.Exploring;
@@ -104,7 +108,7 @@ public class Human : Character
             }
         }
         if (_targetRoom == null) {
-            Debug.LogWarning($"{name} doesn't have a target door.");
+            //Debug.LogWarning($"{name} doesn't have a target door.");
         }
         MoveToTargetRoom();
     }
