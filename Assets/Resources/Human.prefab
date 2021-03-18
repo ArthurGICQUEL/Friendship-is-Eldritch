@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6227805214933207427}
   - component: {fileID: 1812182529059754159}
   - component: {fileID: -7455565408493606300}
+  - component: {fileID: 5269044351914409951}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -94,9 +95,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f893d4e019ff4a4c8caa2af334d5066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 0}
   isStuned: 0
-  _speed: 1
-  _idleTime: 10
-  _idleStillTime: 1
+  _baseSpeed: 2
+  _speedRatioIdle: 0.5
+  _speedRatioExploring: 1
+  _speedRatioPanicking: 1.5
+  _speedRatioChased: 2
+  _idleDuration: 10
+  _idleStillDuration: 1
   sanityMax: 1
+--- !u!95 &5269044351914409951
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8762841834710212763}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db12f2da1d72a5d4cac91ca3ea67ecad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

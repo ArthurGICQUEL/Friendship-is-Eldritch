@@ -11,23 +11,45 @@ public abstract class Character : MonoBehaviour
             OnExitRoom(_currentRoom); OnEnterRoom(value); 
         }
     }
+    [HideInInspector] public Node _targetNode = null, _lastNode = null;
     public bool isStuned = false;
 
+    protected float Speed { 
+        get { return _baseSpeed * _speedRatio; } 
+    }
     [SerializeField] protected float _baseSpeed = 1;
     protected float _speedRatio = 1;
     protected Room _currentRoom = null;
-    protected Node _targetNode = null, _lastNode = null;
     protected Vector3 _targetPos;
+    protected Room _lastRoom = null;
+    protected Animator _anim;
+
+    SpriteRenderer _sr;
+    Vector3 _lastPos;
 
     private void Awake()
     {
+        _anim = GetComponent<Animator>();
+        _sr = GetComponent<SpriteRenderer>();
         CurrentRoom = FindCurrentRoom();
+        _lastPos = transform.position;
     }
 
     protected virtual void Update()
     {
+        // sprite orientation
+        Vector3 dir = transform.position - _lastPos;
+        if (dir.x > 0) { _sr.flipX = true; }
+        else if (dir.x < 0) { _sr.flipX = false; }
+        _lastPos = transform.position;
+        // behaviour actions
         if (!isStuned)
         {
+            // Find current room
+            Room room = FindCurrentRoom();
+            if(room != CurrentRoom) { _lastRoom = CurrentRoom; }
+            CurrentRoom = room;
+            // act on behavior
             ChooseNextAction();
         }
     }
@@ -50,7 +72,7 @@ public abstract class Character : MonoBehaviour
     /// <returns><b>True</b> if the targetPoint has been reached, <b>False</b> if it hasn't.</returns>
     protected bool Move(Vector3 targetPoint)
     {
-        transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * _baseSpeed / Vector3.Distance(targetPoint, transform.position));
+        transform.position = Vector3.Lerp(transform.position, targetPoint, Time.deltaTime * Speed / Vector3.Distance(targetPoint, transform.position));
         return transform.position == targetPoint;
     }
 

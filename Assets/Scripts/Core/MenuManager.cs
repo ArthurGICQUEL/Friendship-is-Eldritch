@@ -11,10 +11,21 @@ public class MenuManager : MonoBehaviour
     public GameObject explications1;
     public GameObject explications2;
     public GameObject go;
+    public GameObject ambiancesound;
+    public GameObject gosound;
 
     public void OnClick_Start()
     {
-        SceneManager.LoadScene(1);
+        ambiancesound.SetActive(false);
+        gosound.SetActive(true);
+        StartCoroutine(WaitGame());
+    }
+
+    IEnumerator WaitGame()
+    {
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene(2);
     }
 
     public void Cthulubirthday()

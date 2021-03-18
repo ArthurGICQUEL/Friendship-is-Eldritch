@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefab/E_Summon.prefab.meta
 guid: 494dd568319913b4f8f0f0ada5216f89
 PrefabImporter:
+=======
+guid: 530ef3734833aad49b1cfcd51d88bd9d
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 1dc3c8c3b291ae01f736b9e299d8d2e856ed3281:Assets/Sprites/Animations/Character1/Panicking.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

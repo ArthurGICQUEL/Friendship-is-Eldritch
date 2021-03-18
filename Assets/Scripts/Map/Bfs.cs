@@ -37,10 +37,12 @@ public static class Bfs
             }
         }
     }
-    public static Node GetNextNode(Vector3 from, Vector3 to)
+
+    public static Node GetNextNode(Vector3 from, Vector3 to) => GetNextNode(GetNode(from), GetNode(to));
+    public static Node GetNextNode(Node startNode, Node endNode)
     {
-        Node startNode = GetNode(from);
-        Node endNode = GetNode(to);
+        //Node startNode = GetNode(from);
+       // Node endNode = GetNode(to);
         if (startNode == null || endNode == null)
         {
             return null;
