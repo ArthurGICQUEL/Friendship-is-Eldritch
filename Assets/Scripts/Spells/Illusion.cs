@@ -14,8 +14,10 @@ public class Illusion : Spell
 
     public override bool Cast()
     {
+        GameObject fx = (GameObject)Resources.Load("E_Illusion");
         if (target.humans.Count == 0) return false;
         AudioManager.Instance.Play("Cast");
+        GameObject.Instantiate(fx, target.GetMiddleFloor(), fx.transform.rotation);
         int nbHumans = target.humans.Count;
         for (int i = 0; i < nbHumans; i++)
         {
