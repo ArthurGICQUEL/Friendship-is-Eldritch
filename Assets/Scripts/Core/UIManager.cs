@@ -36,12 +36,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        
+
         Mathf.Clamp(sliderVolume.value, 0f, 1f);
-        GetComponent<AudioSource>().volume = sliderVolume.value;
+        AudioListener.volume = sliderVolume.value;
         // Hide UI elements
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.W)) {
-            if (!uiIsHidden) {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.W))
+        {
+            if (!uiIsHidden)
+            {
                 DeselectSpell();
             }
             uiIsHidden = !uiIsHidden;
@@ -52,11 +54,17 @@ public class UIManager : MonoBehaviour
         SetTime(GameManager.Instance.timeOfNight);
         if (selectedSpell != null)
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                DeselectSpell();
+                return;
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                for (int i=0; i<hits.Length; i++) {
-                    if(hits[i].collider.TryGetComponent(out Room room)) OnRoomClick(room);
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].collider.TryGetComponent(out Room room)) OnRoomClick(room);
                 }
             }
 

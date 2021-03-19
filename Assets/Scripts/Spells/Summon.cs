@@ -18,7 +18,7 @@ public class Summon : Spell
         AudioManager.Instance.Play("Cast");
 
         Minion minion = ((GameObject)GameObject.Instantiate(Resources.Load("Villain"), target.GetMiddleFloor(), Quaternion.identity)).GetComponent<Minion>();
-        GameObject.Instantiate(fx, minion.transform.position, fx.transform.rotation);
+        GameObject.Instantiate(fx, minion.transform.position, fx.transform.rotation, minion.transform);
         GameObject.Instantiate(fxFollow, minion.transform.position, fxFollow.transform.rotation, minion.transform);
         minion.insanityPower = summonPower;
         GameManager.Instance.Mana -= cost;
