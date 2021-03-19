@@ -39,12 +39,28 @@ public class Minion : Character
                 humans[i].State = MindState.Chased;
             }
         }
+        bool inSameRoom = CurrentRoom != null && _prey.CurrentRoom != null && CurrentRoom == _prey.CurrentRoom;
+        Debug.Log("Minion is in same room = " + inSameRoom);
+        if (inSameRoom) {
+            if (LerpToward(_prey.transform.position)) {
+                OnPreyReached();
+            }
+        } else {
+            if(MoveToTargetNode()) {
+                Room targetRoom = _prey.CurrentRoom ?? _prey._targetRoom;
+                Node targetDoorNode = Bfs.GetNextNode(targetRoom.GetMiddleFloor(), _lastNode.position);
+
+                _targetNode = Bfs.GetNextNode(_lastNode.position, targetDoorNode.position);
+                Debug.Log("targetRoom: " + targetRoom + "; targetDoorNode: " + targetDoorNode + "; _targetNode: " + _targetNode);
+            }
+        }
+
         /*if (_prey.CurrentRoom == CurrentRoom 
             || (_prey._targetNode == _targetNode && _prey._lastNode == _lastNode) 
             || (_prey._targetNode == _lastNode && _prey._lastNode == _targetNode)) {
             _targetPos = _prey.transform.position;
         }*/
-        if (CurrentRoom != null && _prey.CurrentRoom != null && CurrentRoom == _prey.CurrentRoom) {
+        /*if (CurrentRoom != null && _prey.CurrentRoom != null && CurrentRoom == _prey.CurrentRoom) {
             if (LerpToward(_prey.transform.position)) {
                 OnPreyReached();
             }
@@ -62,7 +78,7 @@ public class Minion : Character
             } else {
                 _targetPos = _prey.transform.position;
             }
-        }
+        }*/
     }
 
     public void AssignTarget(Human target) {

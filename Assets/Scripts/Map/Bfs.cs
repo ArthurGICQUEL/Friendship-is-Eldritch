@@ -19,20 +19,26 @@ public static class Bfs
                 nodeDic[roomPos] = new Node(roomPos);
             }
         }
-        Node nodeDoor, nodeRoom;
+        Node nodeDoor, nodeRoom, nodeTargetDoor;
         for (int i = 0; i < doors.Length; i++)
         {
             nodeDoor = nodeDic[doors[i].floorPos];
             nodeRoom = nodeDic[doors[i].room.GetMiddleFloor()];
             nodeRoom.children.Add(nodeDoor); //link la room and cette door
             nodeDoor.children.Add(nodeRoom); //link la door avec sa room
-            nodeDoor.children.Add(nodeDic[doors[i].targetDoor.floorPos]); //link la porte d'en face qui fait parti de l'autre chambre
+            Debug.DrawLine(nodeRoom.position, nodeDoor.position, Color.green, 10f);
+            nodeTargetDoor = nodeDic[doors[i].targetDoor.floorPos];
+            nodeDoor.children.Add(nodeTargetDoor); //link la porte d'en face qui fait parti de l'autre chambre
+            Debug.DrawLine(nodeTargetDoor.position, nodeDoor.position, Color.green, 10f);
             Door[] roomDoors = doors[i].room.doors;
+            Node nodeRoomDoor;
             for (int j = 0; j < roomDoors.Length; j++)
             {
                 if (doors[i] != roomDoors[j])
                 {
-                    nodeDoor.children.Add(nodeDic[roomDoors[j].floorPos]); // link les portes de la chambre à la porte actuelle
+                    nodeRoomDoor = nodeDic[roomDoors[j].floorPos];
+                    nodeDoor.children.Add(nodeRoomDoor); // link les portes de la chambre à la porte actuelle
+                    Debug.DrawLine(nodeDoor.position, nodeRoomDoor.position, Color.green, 10f);
                 }
             }
         }

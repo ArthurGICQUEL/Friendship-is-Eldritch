@@ -33,7 +33,7 @@ public class Human : Character
     float _sanity = 1;
     Slider _sanitySlider;
     MindState _state = MindState.Idle;
-    Room _targetRoom = null;
+    [HideInInspector] public Room _targetRoom = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0, _possessedTimer = 0;
 
@@ -48,6 +48,7 @@ public class Human : Character
     private void Start()
     {
         State = MindState.Idle;
+        _lastNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
         //CurrentRoom = FindCurrentRoom();
     }
 
@@ -126,14 +127,8 @@ public class Human : Character
                     group[i].State = MindState.Exploring;
                 }
                 group[i]._targetRoom = nextRoom;
-                group[i]._lastNode = Bfs.GetNode(group[i].CurrentRoom.GetMiddleFloor());
-                //Debug.Log("LastNode: " + group[i]._lastNode);
-                group[i]._targetNode = group[i].FindNextNode();
+                group[i]._targetNode = group[i].FindNextNode(true);
             }
-        }
-        if (_targetRoom == null)
-        {
-            //Debug.LogWarning($"{name} doesn't have a target door.");
         }
         MoveToTargetRoom();
     }
@@ -146,7 +141,7 @@ public class Human : Character
             List<Room> availableRooms = GetAvailableRooms();
             // get a random room among the available ones
             _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
-            _targetNode = FindNextNode();
+            _targetNode = FindNextNode(true);
         }
         MoveToTargetRoom();
     }
@@ -170,7 +165,7 @@ public class Human : Character
             if (availableRooms.Count > 0)
             {
                 _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
-                _targetNode = FindNextNode();
+                _targetNode = FindNextNode(true);
             }
         }
         MoveToTargetRoom();
@@ -184,6 +179,7 @@ public class Human : Character
     void ActPossessed() {
         _possessedTimer -= Time.deltaTime;
         if (_possessedTimer <= 0) {
+            AudioManager.Instance.Stop("Possession");
             State = MindState.Idle;
         }
     }
@@ -206,6 +202,7 @@ public class Human : Character
     public void Possess(float duration) {
         _possessedDuration = duration;
         State = MindState.Possessed;
+        AudioManager.Instance.Play("Possession");
     }
 
     Vector3 GetTargetInRoom()
@@ -214,8 +211,11 @@ public class Human : Character
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
-    Node FindNextNode()
+    Node FindNextNode(bool fromRoom = false)
     {
+        if (fromRoom) {
+            _lastNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+        }
         //Debug.Log($"lastNode: {_lastNode}; targetRoom: {_targetRoom}");
         return Bfs.GetNextNode(_lastNode.position, _targetRoom.GetMiddleFloor());
     }
