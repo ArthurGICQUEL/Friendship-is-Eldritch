@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     Spell selectedSpell;
-    public Slider sliderTimeOfNight;
+    public Slider sliderTimeOfNight, sliderVolume;
     public Image fillTimeOfNight;
     Room[] rooms;
 
@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        
+        Mathf.Clamp(sliderVolume.value, 0f, 1f);
+        GetComponent<AudioSource>().volume = sliderVolume.value;
         // Hide UI elements
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.W)) {
             if (!uiIsHidden) {
