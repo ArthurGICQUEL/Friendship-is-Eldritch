@@ -16,9 +16,9 @@ public class Possession : Spell
     public override bool Cast()
     {
         if (target.humans.Count == 0) return false;
-        //AudioManager.Instance.Play("Possesion");
+        AudioManager.Instance.Play("Cast");
         List<Human> humans = target.GetAvailableHumans();
-        if(humans.Count == 0) return false;
+        if (humans.Count == 0) return false;
 
         Human possessed = humans[Random.Range(0, humans.Count)];
         possessed.Possess(possessTime);
