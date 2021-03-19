@@ -12,8 +12,10 @@ public class UIManager : MonoBehaviour
     public Image fillNight;
     Room[] rooms;
 
+    [SerializeField] GameObject mainCanvas = null;
     [SerializeField] GameObject canvasSpellCasting = null, buttonIllusion, buttonPossession, buttonSummon;
     [SerializeField] Text manaTxt;
+    bool uiIsHidden = false;
 
     private void Awake()
     {
@@ -34,6 +36,16 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        // Hide UI elements
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.W)) {
+            if (!uiIsHidden) {
+                DeselectSpell();
+            }
+            uiIsHidden = !uiIsHidden;
+            mainCanvas.SetActive(!uiIsHidden);
+        }
+        if (uiIsHidden) { return; }
+
         SetTime(GameManager.Instance.timeOfNight);
         if (selectedSpell != null)
         {

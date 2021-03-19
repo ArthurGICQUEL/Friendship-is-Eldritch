@@ -2901,7 +2901,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceBounds: {fileID: 660931393}
-  speed: 5
+  moveSpeed: 10
+  zoomSpeed: 1
+  closeSize: 3
+  farSize: 15
 --- !u!1 &389585958
 GameObject:
   m_ObjectHideFlags: 0
@@ -8019,6 +8022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderNight: {fileID: 1948635521}
   fillNight: {fileID: 860600137}
+  mainCanvas: {fileID: 401903021}
   canvasSpellCasting: {fileID: 319725826}
   buttonIllusion: {fileID: 251943731}
   buttonPossession: {fileID: 347094435}
@@ -8056,7 +8060,6 @@ MonoBehaviour:
   tTNight: 60
   timerTime: 1
   gameHasEnded: 0
-  win: 0
   moonPrefab: {fileID: 8832357862916632990, guid: 6b4c4b75efd64fb449c8e166bf98e78f,
     type: 3}
   characterControllers:
