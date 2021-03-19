@@ -166,6 +166,8 @@ public class Human : Character
             {
                 _targetRoom = availableRooms[Random.Range(0, availableRooms.Count)];
                 _targetNode = FindNextNode(true);
+            } else {
+                _targetRoom = null;
             }
         }
         MoveToTargetRoom();
@@ -207,7 +209,7 @@ public class Human : Character
 
     Vector3 GetTargetInRoom()
     {
-        if(CurrentRoom == null) Debug.LogError("CurrentRoom is null");
+        //if(CurrentRoom == null) Debug.LogError("CurrentRoom is null");
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
