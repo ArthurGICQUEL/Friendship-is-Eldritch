@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        manaTxt.text = "Power : " + GameManager.Instance.Mana + " / " + GameManager.Instance.ManaMax;
+        manaTxt.text = "Puissance : " + GameManager.Instance.Mana + " / " + GameManager.Instance.ManaMax;
         if (GameManager.Instance.Mana < Illusion.illusionCost)
         {
             buttonIllusion.transform.GetChild(1).gameObject.SetActive(true);

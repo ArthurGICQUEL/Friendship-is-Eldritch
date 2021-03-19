@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
         else if (nightEnded)
         {
             gameHasEnded = true;
+            win = false;
             LoadWinLoseScene();
         }
     }

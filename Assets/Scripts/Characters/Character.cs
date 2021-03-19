@@ -7,17 +7,20 @@ public abstract class Character : MonoBehaviour
     public Room CurrentRoom
     {
         get { return _currentRoom; }
-        set {
+        set
+        {
             ExitRoom();
-            if (value != null) {
+            if (value != null)
+            {
                 EnterRoom(value);
             }
         }
     }
     [HideInInspector] public Node _targetNode = null, _lastNode = null;
 
-    protected float Speed { 
-        get { return _baseSpeed * _speedRatio; } 
+    protected float Speed
+    {
+        get { return _baseSpeed * _speedRatio; }
     }
     [SerializeField] protected float _baseSpeed = 1;
     protected float _speedRatio = 1;
@@ -44,27 +47,28 @@ public abstract class Character : MonoBehaviour
         if (dir.x > 0) { _sr.flipX = true; }
         else if (dir.x < 0) { _sr.flipX = false; }
 
-        // Find current room
-        /*Room room = FindCurrentRoom();
-        if(room != CurrentRoom) { _lastRoom = CurrentRoom; }
-        CurrentRoom = room;*/
-
+        _lastPos = transform.position;
         // act on behavior
         ChooseNextAction();
 
-        _lastPos = transform.position;
     }
 
-    protected bool MoveToTargetNode() {
-        if(_targetNode == null) { return false; }
-        if(LerpToward(_targetNode.position)) {
+    protected bool MoveToTargetNode()
+    {
+        if (_targetNode == null) { return false; }
+        if (LerpToward(_targetNode.position))
+        {
             _lastNode = _targetNode;
             // determine if entering or exiting a room
             Door door = FindCurrentDoor();
-            if(door != null) {
-                if(CurrentRoom == null) {
+            if (door != null)
+            {
+                if (CurrentRoom == null)
+                {
                     CurrentRoom = door.room;
-                } else if(CurrentRoom == door.room) {
+                }
+                else if (CurrentRoom == door.room)
+                {
                     _lastRoom = CurrentRoom;
                     CurrentRoom = null;
                 }
@@ -85,20 +89,26 @@ public abstract class Character : MonoBehaviour
         return transform.position == targetPoint;
     }
 
-    protected Room FindCurrentRoom() {
+    protected Room FindCurrentRoom()
+    {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
-        for(int i = 0; i < hits.Length; i++) {
-            if(hits[i].collider.TryGetComponent(out Room room)) {
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.TryGetComponent(out Room room))
+            {
                 return room;
             }
         }
         return null;
     }
 
-    protected Door FindCurrentDoor() {
+    protected Door FindCurrentDoor()
+    {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero);
-        for(int i = 0; i < hits.Length; i++) {
-            if(hits[i].collider.TryGetComponent(out Door door)) {
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.TryGetComponent(out Door door))
+            {
                 return door;
             }
         }

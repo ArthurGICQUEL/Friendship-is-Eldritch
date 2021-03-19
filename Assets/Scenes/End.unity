@@ -649,7 +649,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -490, y: -421}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 111, y: 103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617516008
 MonoBehaviour:
@@ -724,8 +724,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 685df81539a35af4ea704f6f3da92743, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -811,7 +811,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit
+  m_Text: Quitter
 --- !u!222 &650257572
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1016,7 +1016,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play Again
+  m_Text: Rejouer
 --- !u!222 &1055215033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1435,9 +1435,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Ainsi s'ach\xE8ve l'histoire de ces humains rejet\xE9par leur propre soci\xE9t\xE9
-    et que Cthulhu sauva. Il leur permit de trouver leur place et f\xEAta son anniversaire
-    entour\xE9 de ses nouveaux amis."
+  m_Text: "Bravo ! Gr\xE2ce \xE0 v\xF4tre ma\xEEtrise et \xE0 la bienveillance de
+    Cthulhu, les humains ont pu transcender leur condition et trouver leur place
+    \xE0 ses c\xF4t\xE9s."
 --- !u!222 &1874920965
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1483,7 +1483,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 455, y: -421}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 111, y: 103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1942230784
 MonoBehaviour:
@@ -1558,8 +1558,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 685df81539a35af4ea704f6f3da92743, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1646,9 +1646,9 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Cthulhu n'a pas r\xE9ussi \xE0 aider les humains, le soleil s'est lev\xE9
-    trop vite et les humains ont quitt\xE9 le donjon pour rejoindre la soci\xE9t\xE9,
-    peut-\xEAtre y trouveront-ils leur place malgr\xE9 tout? Mais Cthulhu restera
-    seul."
+    trop vite et ils ont quitt\xE9 le donjon pour rejoindre la soci\xE9t\xE9. Peut-\xEAtre
+    y trouveront-ils leur place malgr\xE9 tout ... Mais Cthulhu restera seul pour
+    son anniversaire."
 --- !u!222 &2145489566
 CanvasRenderer:
   m_ObjectHideFlags: 0

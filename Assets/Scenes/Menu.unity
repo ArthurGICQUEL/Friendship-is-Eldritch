@@ -190,9 +190,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Des humains! S\xFBrement des marginaux ayant fuit la soci\xE9t\xE9 dans
+  m_Text: "Des humains ! S\xFBrement des marginaux ayant fuit la soci\xE9t\xE9 dans
     laquelle ils ne trouvaient pas leur place. En les regardant, Cthulhu se dit que
-    les humains devaient \xEAtre perdu et il choisi de les aider \xE0 trouver leur
+    les humains devaient \xEAtre perdus et il choisit de les aider \xE0 trouver leur
     place en les prenant \xE0 ses c\xF4t\xE9s."
 --- !u!222 &83674839
 CanvasRenderer:
@@ -1953,9 +1953,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Mais le temps presse. Cthulhu n'a que jusqu'\xE0 la fin de la nuit pour
-    convertir les humains. Si le soleil se l\xE8ve alors ceux-ci pourront quitter
-    le donjon et n'y reviendront probablement jamais."
+  m_Text: "Mais le temps presse ! Cthulhu n'a que jusqu'\xE0 la fin de la nuit pour
+    convertir les humains. Si le soleil se l\xE8ve, ceux-ci pourront quitter le donjon
+    et n'y reviendront probablement jamais."
 --- !u!222 &1122790909
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2860,14 +2860,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nUtilisez les sorts \xE0 votre disposition pour ensorcelez les pi\xE8ces
-    et faire baisser la sant\xE9 mentale des personnages.\n\nUn sort s'active aussit\xF4t
-    donc veillez bien \xE0 ce qu'il y ait au moins un personnage dans la pi\xE8ce
-    sur laquelle vous cliquez, exception pour le serviteur qui doit appara\xEEtre
-    dans une pi\xE8ce vide.\n\nLes sorts consomment de l'\xE9nergie magique et le
-    co\xFBt n'est pas le m\xEAme en fonction du sort, v\xE9rifiez bien votre jauge
-    d'\xE9nergie. Celle-ci se remplit \xE0 nouveau avec le temps.\n\nPour gagner
-    vous devez avoir fait baisser \xE0 0 la jauge de tous les personnages, ils deviennent
+  m_Text: "\nUtilisez les sorts \xE0 votre disposition pour ensorceler les pi\xE8ces
+    et faire baisser la sant\xE9 mentale des personnages.\n\nLes sorts consomment
+    de la puissance et le co\xFBt n'est pas le m\xEAme en fonction du sort, v\xE9rifiez
+    bien votre jauge de puissance. Celle-ci se remplit avec le temps.\n\nPour gagner,
+    vous devez \xE9puiser la sant\xE9 mental de tous les personnages, ils deviennent
     alors des adorateurs au service de Cthulu.\n\nVous perdez la partie si vous n'avez
     pas r\xE9ussi \xE0 convertir tous les personnages avant la fin de la nuit.\n"
 --- !u!222 &1407810218
@@ -3514,14 +3511,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Pour aider les humains Cthulhu dispose de trois sorts. La possession qui
-    poss\xE8de un humain un court instant, baissant sa sant\xE9 mentale et effrayant
-    les autres humains dans la m\xEAme pi\xE8ce. L'illusion fait baisser la sant\xE9
-    mentale de tous les humains dans laquelle le sort a \xE9t\xE9 lanc\xE9. L'invocation
-    qui invoque le serviteur de Cthulhu, il poursuivra pendant quelques secondes
-    les humains, les effrayants, s'il en attrape un la sant\xE9 mentale de celui-ci
-    baisse. Si la sant\xE9 mentale des humains tombe \xE0 0 alors ils deviendront
-    des adorateurs et rejoindront Cthulhu une fois qu'ils seront tous transform\xE9."
+  m_Text: "Pour aider les humains Cthulhu dispose de trois sorts. La possession,
+    qui poss\xE8de un humain un court instant, baissant sa sant\xE9 mentale et effrayant
+    les autres. L'illusion, qui fait baisser la sant\xE9 mentale de tous les humains
+    d'une pi\xE8ce. L'invocation, qui invoque un serviteur de Cthulhu qui poursuit
+    un humain pendant quelques secondes, effrayant les autres. Si la sant\xE9 mentale
+    des humains tombe \xE0 0, ils deviendront des adorateurs et rejoindront Cthulhu
+    une fois tous transform\xE9s."
 --- !u!222 &1635083129
 CanvasRenderer:
   m_ObjectHideFlags: 0
