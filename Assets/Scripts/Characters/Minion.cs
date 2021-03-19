@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class Minion : Character
 {
-    public float insanityPower;
+    [HideInInspector] public float insanityPower;
 
+    [SerializeField] float _lifeTime = 1;
     Human _prey = null;
     bool _isMoving;
+    float _timerLife;
 
     private void Start()
     {
         Human[] humans = FindObjectsOfType<Human>();
         AssignTarget(humans[Random.Range(0, humans.Length)]);
+        _timerLife = _lifeTime;
     }
 
     protected override void ChooseNextAction()
     {
+        //update lifetime
+        _timerLife -= Time.deltaTime;
+        if (_timerLife <= 0) { Destroy(gameObject); }
+
         // animation moving/idle
         bool tempMoving = _lastPos != transform.position;
         if (tempMoving != _isMoving) {
@@ -64,7 +71,9 @@ public class Minion : Character
     }
 
     void OnPreyReached() {
-        Debug.LogWarning("Crunchy crunch, the prey has been eaten!");
+        //Debug.LogWarning("Crunchy crunch, the prey has been eaten!");
+        _prey.Sanity -= insanityPower;
+        Destroy(gameObject);
     }
 
     protected override void EnterRoom(Room room)

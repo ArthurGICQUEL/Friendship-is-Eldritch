@@ -3,17 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenCam : MonoBehaviour
-{   [SerializeField]
-    private float minX, maxX, minY, maxY;
+{   //[SerializeField]
     //public Camera camera;
-    public int speed;
-    
+    [SerializeField] BoxCollider2D referenceBounds = null;
+    [SerializeField] int speed;
+    private float minX, maxX, minY, maxY;
+
+    private void Awake() {
+        if (referenceBounds == null) {
+            minX = -72.6f;
+            maxX = 18.4f;
+            minY = -3.3f;
+            maxY = 0f;
+            return;
+        }
+        Vector3 boundsSize = referenceBounds.size;
+        Vector3 boundsOffset = (Vector3)referenceBounds.offset + referenceBounds.transform.position;
+        minX = -boundsSize.x * 0.5f + boundsOffset.x;
+        maxX = boundsSize.x * 0.5f + boundsOffset.x;
+        minY = -boundsSize.y * 0.5f + boundsOffset.y;
+        maxY = boundsSize.y * 0.5f + boundsOffset.y;
         
-    void Start()
-    {   minX = -72.6f;
-        maxX = 18.4f;
-        minY = -3.3f;
-        maxY = 0f;
     }
 
     void Update()

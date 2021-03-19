@@ -23,14 +23,10 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GameManager.Instance.win);
-        Debug.Log("lal");
-        if (GameManager.Instance.gameHasEnded)
-        {
-            if (GameManager.Instance.win)
-            {
-                imageWin.SetActive(true);
-            }
+        if (SceneManager.GetActiveScene().buildIndex == 3) {
+            //Debug.Log(GameManager.win);
+            //Debug.Log("lal");
+            if (GameManager.win) imageWin.SetActive(true);
             else imageLose.SetActive(true);
         }
     }
@@ -47,8 +43,8 @@ public class MenuManager : MonoBehaviour
         StartCoroutine(WaitGame());
     }
 
-    IEnumerator WaitGame()
-    {
+    IEnumerator WaitGame() {
+        //Destroy(FindObjectOfType<GameManager>().gameObject);
         yield return new WaitForSeconds(2);
 
         SceneManager.LoadScene(2);

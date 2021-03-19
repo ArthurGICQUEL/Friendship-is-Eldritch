@@ -8053,10 +8053,9 @@ MonoBehaviour:
   nbStartHuman: 5
   startRoom: {fileID: 9085368015928504492}
   timeOfNight: 0
-  tTNight: 60
+  tTNight: 120
   timerTime: 1
   gameHasEnded: 0
-  win: 0
   moonPrefab: {fileID: 8832357862916632990, guid: 6b4c4b75efd64fb449c8e166bf98e78f,
     type: 3}
   characterControllers:

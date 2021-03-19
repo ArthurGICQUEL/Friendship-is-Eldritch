@@ -39,8 +39,10 @@ public class UIManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (hit.collider != null && hit.collider.TryGetComponent(out Room room)) OnRoomClick(room);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                for (int i=0; i<hits.Length; i++) {
+                    if(hits[i].collider.TryGetComponent(out Room room)) OnRoomClick(room);
+                }
             }
 
             if (selectedSpell is Illusion || selectedSpell is Possession)
@@ -82,6 +84,7 @@ public class UIManager : MonoBehaviour
 
     public void OnRoomClick(Room room)
     {
+        //Debug.Log("Clicked room: " + room?.name);
         selectedSpell.target = room;
         if (selectedSpell.cost <= GameManager.Instance.Mana && selectedSpell.Cast()) DeselectSpell();
     }

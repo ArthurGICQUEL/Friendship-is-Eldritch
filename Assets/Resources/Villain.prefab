@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseSpeed: 5
   insanityPower: 0
+  _lifeTime: 10
 --- !u!212 &2541099432182754962
 SpriteRenderer:
   m_ObjectHideFlags: 0

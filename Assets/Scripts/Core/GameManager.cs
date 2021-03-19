@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static bool win = false;
 
     [HideInInspector] public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
     public float timeOfNight, tTNight = 60f, timerTime = 1;
-    public bool gameHasEnded = false, win = false;
+    public bool gameHasEnded = false;
 
     [SerializeField] GameObject moonPrefab = null;
     [SerializeField] RuntimeAnimatorController[] characterControllers = null;
@@ -108,7 +109,6 @@ public class GameManager : MonoBehaviour
                 notAllPossessed = true;
             }
         }
-        return;
         if (!notAllPossessed) {
             gameHasEnded = true;
             win = true;
