@@ -6,15 +6,18 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    [SerializeField] GameObject moonPrefab = null;
-    [SerializeField] int totalNightSteps = 3;
+
     [HideInInspector] public GameObject instMoon;
     public int nbStartHuman = 5;
     public Room startRoom;
     public float timeOfNight, tTNight = 60f, timerTime = 1;
+    public bool gameHasEnded = false, win = false;
+
+    [SerializeField] GameObject moonPrefab = null;
+    [SerializeField] RuntimeAnimatorController[] characterControllers = null;
+    [SerializeField] int totalNightSteps = 3;
     float timer;
     int nightStep = 0;
-    public bool gameHasEnded = false, win = false;
 
     public int Mana
     {
@@ -59,7 +62,8 @@ public class GameManager : MonoBehaviour
             timeOfNight = 0;
             for (int i = 0; i < nbStartHuman; i++)
             {
-                Instantiate(Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity);
+                Human human = Instantiate((GameObject)Resources.Load("Human"), Vector3.Lerp(startRoom.floorLimits[0], startRoom.floorLimits[1], (i + 1) / (float)(nbStartHuman + 1)), Quaternion.identity).GetComponent<Human>();
+                human.GetComponentInChildren<Animator>().runtimeAnimatorController = characterControllers?[i % characterControllers.Length];
             }
         }
     }
@@ -73,9 +77,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                EndGame();
+                EndGame(true);
             }
-
 
             if (Mana < ManaMax && timer >= timerTime)
             {
@@ -93,10 +96,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EndGame()
+    public void EndGame(bool nightEnded = false)
     {
         if (gameHasEnded) { return; }
-        gameHasEnded = true;
         Human[] humans = FindObjectsOfType<Human>();
         bool notAllPossessed = false;
         for (int i = 0; i < humans.Length; i++)
@@ -106,23 +108,19 @@ public class GameManager : MonoBehaviour
                 notAllPossessed = true;
             }
         }
-        if (notAllPossessed)
-        {
-            Lose();
-        }
-        else
-        {
-            Win();
+        return;
+        if (!notAllPossessed) {
+            gameHasEnded = true;
+            win = true;
+            LoadWinLoseScene();
+        } else if (nightEnded) {
+            gameHasEnded = true;
+            LoadWinLoseScene();
         }
     }
 
-    void Lose()
+    void LoadWinLoseScene()
     {
-        SceneManager.LoadScene(3);
-    }
-    void Win()
-    {
-        win = true;
         SceneManager.LoadScene(3);
     }
 }

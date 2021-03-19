@@ -47,14 +47,14 @@ public class UIManager : MonoBehaviour
             {
                 for (int i = 0; i < rooms.Length; i++)
                 {
-                    rooms[i].HilightedBorders.SetActive(rooms[i].humans.Count > 0);
+                    rooms[i].hilightedBorders.SetActive(rooms[i].humans.Count > 0);
                 }
             }
             if (selectedSpell is Summon)
             {
                 for (int i = 0; i < rooms.Length; i++)
                 {
-                    rooms[i].HilightedBorders.SetActive(rooms[i].humans.Count == 0);
+                    rooms[i].hilightedBorders.SetActive(rooms[i].humans.Count == 0);
                 }
             }
         }
@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
         canvasSpellCasting.SetActive(false);
         for (int i = 0; i < rooms.Length; i++)
         {
-            rooms[i].HilightedBorders.SetActive(false);
+            rooms[i].hilightedBorders.SetActive(false);
         }
     }
     public void SetMaxTime(float time, float maxTime)

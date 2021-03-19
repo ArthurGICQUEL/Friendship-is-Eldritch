@@ -33,7 +33,6 @@ public class Human : Character
     float _sanity = 1;
     Slider _sanitySlider;
     MindState _state = MindState.Idle;
-    //Minion _hunter = null;
     Room _targetRoom = null;
     Vector3 _inRoomTarget;
     float _stateTimer = 0, _idleStillTimer = 0, _possessedTimer = 0;
@@ -49,11 +48,7 @@ public class Human : Character
     private void Start()
     {
         State = MindState.Idle;
-    }
-
-    public void Possess(float duration) {
-        _possessedDuration = duration;
-        State = MindState.Possessed;
+        //CurrentRoom = FindCurrentRoom();
     }
 
     protected override void ChooseNextAction()
@@ -96,13 +91,13 @@ public class Human : Character
         {
             _idleStillTimer -= Time.deltaTime;
             // start moving
+            _inRoomTarget = GetTargetInRoom(); // get next Target
             _anim.SetInteger("MindState", (int)MindState.Exploring);
         }
         if (_idleStillTimer <= 0)
         {
-            if (Move(_inRoomTarget))
+            if (LerpToward(_inRoomTarget))
             {
-                _inRoomTarget = GetTargetInRoom();
                 // stop moving for now
                 _idleStillTimer = _idleStillDuration;
                 _anim.SetInteger("MindState", (int)MindState.Idle);
@@ -127,9 +122,11 @@ public class Human : Character
             //Debug.LogWarning($"GroupSize = {group.Length}; NextRoom: {nextRoom}");
             for (int i = 0; i < group.Length; i++)
             {
-                group[i].State = MindState.Exploring;
+                if (group[i] != this) {
+                    group[i].State = MindState.Exploring;
+                }
                 group[i]._targetRoom = nextRoom;
-                group[i]._lastNode = Bfs.GetNode(CurrentRoom.GetMiddleFloor());
+                group[i]._lastNode = Bfs.GetNode(group[i].CurrentRoom.GetMiddleFloor());
                 //Debug.Log("LastNode: " + group[i]._lastNode);
                 group[i]._targetNode = group[i].FindNextNode();
             }
@@ -193,28 +190,31 @@ public class Human : Character
 
     void MoveToTargetRoom()
     {
-        if (_targetNode == null) { return; }
-        if (Move(_targetNode.position))
-        {
-            _lastNode = _targetNode;
-            if (_targetRoom.GetMiddleFloor() == _targetNode.position)
+        if(_targetRoom == null) return;
+        if (MoveToTargetNode()) {
+            // if arrived in the target room, become idle
+            if (CurrentRoom != null && CurrentRoom == _targetRoom)
             {
-                _lastRoom = CurrentRoom;
-                //CurrentRoom = _targetRoom;
                 State = MindState.Idle;
                 return;
             }
-            //_lastNode = _targetNode;
+            // if not the target room, then find the next node
             _targetNode = FindNextNode();
         }
     }
 
+    public void Possess(float duration) {
+        _possessedDuration = duration;
+        State = MindState.Possessed;
+    }
+
     Vector3 GetTargetInRoom()
     {
+        if(CurrentRoom == null) Debug.LogError("CurrentRoom is null");
         return Vector3.Lerp(CurrentRoom.floorLimits[0], CurrentRoom.floorLimits[1], Random.Range(0f, 1f));
     }
 
-    protected Node FindNextNode()
+    Node FindNextNode()
     {
         //Debug.Log($"lastNode: {_lastNode}; targetRoom: {_targetRoom}");
         return Bfs.GetNextNode(_lastNode.position, _targetRoom.GetMiddleFloor());
@@ -243,7 +243,7 @@ public class Human : Character
         }
     }
 
-    protected override void OnEnterRoom(Room room)
+    protected override void EnterRoom(Room room)
     {
         if (room == null) { return; }
         if (!room.humans.Contains(this))
@@ -253,12 +253,12 @@ public class Human : Character
         }
     }
 
-    protected override void OnExitRoom(Room room)
+    protected override void ExitRoom()
     {
-        if (room == null) { return; }
-        if (room.humans.Contains(this))
+        if (CurrentRoom == null) { return; }
+        if (CurrentRoom.humans.Contains(this))
         {
-            room.humans.Remove(this);
+            CurrentRoom.humans.Remove(this);
             _currentRoom = null;
             //Debug.LogWarning($"a human left {room.name}");
         }
@@ -280,6 +280,7 @@ public class Human : Character
                 _speedRatio = _speedRatioPanicking;
                 break;
             case MindState.Chased:
+                if (State == MindState.Chased) { break; }
                 _speedRatio = _speedRatioChased;
                 break;
             case MindState.Enlightened:

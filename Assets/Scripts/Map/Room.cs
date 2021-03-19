@@ -9,33 +9,21 @@ public class Room : MonoBehaviour
     [HideInInspector] public List<Human> humans;
     [HideInInspector] public List<Minion> minions;
     [HideInInspector] public Vector3[] floorLimits;
-    [SerializeField] Vector3[] floorLimitsOffset = null;
-    public Bounds bounds;
-    public bool isStartRoom;
-    public GameObject HilightedBorders;
-
+    [HideInInspector] public GameObject hilightedBorders;
+    //[SerializeField] Vector3[] floorLimitsOffset = null;
+    //public Bounds bounds;
+    //public bool isStartRoom;
 
     private void Awake()
     {
+        BoxCollider2D _coll = GetComponent<BoxCollider2D>();
         doors = GetComponentsInChildren<Door>();
+        hilightedBorders = transform.GetChild(0).gameObject;
 
-        floorLimits = new Vector3[floorLimitsOffset.Length];
-        for (int i = 0; i < floorLimitsOffset.Length; i++)
-        {
-            floorLimits[i] = floorLimitsOffset[i] + transform.position;
-        }
-
-
-    }
-
-    private void Start()
-    {
-        //if (isStartRoom) GameManager.Instance.startRoom = this;
-    }
-
-    private void Update()
-    {
-        //Debug.LogWarning($"{name} has {humans.Count} humans.");
+        Vector2 offset = (_coll.size - Vector2.one * 2) * 0.5f;
+        floorLimits = new Vector3[2];
+        floorLimits[0] = new Vector3(-offset.x, -offset.y) + transform.position;
+        floorLimits[1] = new Vector3(offset.x, -offset.y) + transform.position;
     }
 
     public List<Human> GetAvailableHumans() {
@@ -52,26 +40,4 @@ public class Room : MonoBehaviour
     {
         return Vector3.Lerp(floorLimits[0], floorLimits[1], 0.5f);
     }
-
-    /*
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.TryGetComponent(out Character character)) {
-            character.currentRoom = this;
-            if (character is Human) {
-                humans.Add((Human)character);
-            } else if (character is Minion) {
-                minions.Add((Minion)character);
-            }
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision) {
-        if(collision.gameObject.TryGetComponent(out Character character)) {
-            character.currentRoom = null;
-            if(character is Human) {
-                humans.Remove((Human)character);
-            } else if(character is Minion) {
-                minions.Remove((Minion)character);
-            }
-        }
-    }*/
 }

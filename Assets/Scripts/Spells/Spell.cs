@@ -6,6 +6,7 @@ public abstract class Spell
 {
     public int cost;
     public Room target;
+
     public abstract bool Cast();
 
     public static Spell GetSpell(SpellType spell)

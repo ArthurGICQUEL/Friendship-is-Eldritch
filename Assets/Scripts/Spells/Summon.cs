@@ -14,7 +14,7 @@ public class Summon : Spell
         if (target.humans.Count > 0) return false;
         //AudioManager.Instance.Play("Summon");
 
-        GameObject.Instantiate(Resources.Load("Villain"), target.transform.position, Quaternion.identity);
+        GameObject.Instantiate(Resources.Load("Villain"), target.GetMiddleFloor(), Quaternion.identity);
         GameManager.Instance.Mana -= cost;
         return true;
     }
