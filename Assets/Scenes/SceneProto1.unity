@@ -8200,8 +8200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b08d4239a869e940909bb90e5e0f657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderNight: {fileID: 1948635521}
-  fillNight: {fileID: 860600137}
+  sliderTimeOfNight: {fileID: 1948635521}
+  fillTimeOfNight: {fileID: 860600137}
   mainCanvas: {fileID: 401903021}
   canvasSpellCasting: {fileID: 319725826}
   buttonIllusion: {fileID: 251943731}
