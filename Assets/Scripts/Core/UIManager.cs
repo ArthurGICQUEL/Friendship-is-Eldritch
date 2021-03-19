@@ -8,8 +8,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     Spell selectedSpell;
-    public Slider sliderNight;
-    public Image fillNight;
+    public Slider sliderTimeOfNight;
+    public Image fillTimeOfNight;
     Room[] rooms;
 
     [SerializeField] GameObject mainCanvas = null;
@@ -124,11 +124,11 @@ public class UIManager : MonoBehaviour
     }
     public void SetMaxTime(float time, float maxTime)
     {
-        sliderNight.maxValue = maxTime;
-        sliderNight.value = time;
+        sliderTimeOfNight.maxValue = maxTime;
+        sliderTimeOfNight.value = time;
     }
     public void SetTime(float time)
     {
-        sliderNight.value = time;
+        sliderTimeOfNight.value = time;
     }
 }
