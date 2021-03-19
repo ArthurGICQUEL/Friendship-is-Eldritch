@@ -268,11 +268,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nMusique de menu: Titre:  Tender Remains\r\nAuteur: Myuu\r\nSource: https://myuu.bandcamp.com\r\nLicence:
-    https://creativecommons.org/licenses/by/3.0/deed.fr\r\nT\xE9l\xE9chargement (11MB):
-    https://auboutdufil.com/?id=492\n\nMusique de jeu:\n\nD\xE9cor: Pixel 2D Castle
-    Tileset (Szadi Art.\r)\n\nPersonnages: Tasty Characters - Sea Pack, Tasty Characters
-    - Castle Pack, Tasty Characters - Village Pack(Severin Baclet)"
+  m_Text: "Pierre Hoel Charny : developpement, level design\nBastien Coquelin : graphisme,
+    developpement, level design\nArthur Gicquel : developpement, int\xE9gration\nMaela
+    Le Gall : graphisme, sound design, UI, developpement\nGwendal Lemelle : developpement,
+    FX designer, UI,  organisation\n\nMusique de menu: Titre:  Tender Remains\r\nAuteur:
+    Myuu\r\nSource: https://myuu.bandcamp.com\r\nLicence: https://creativecommons.org/licenses/by/3.0/deed.fr\r\nT\xE9l\xE9chargement
+    (11MB): https://auboutdufil.com/?id=492\n\nMusique de jeu:\n\nD\xE9cor: Pixel
+    2D Castle Tileset (Szadi Art.\r)\n\nPersonnages: Tasty Characters - Sea Pack,
+    Tasty Characters - Castle Pack, Tasty Characters - Village Pack(Severin Baclet)"
 --- !u!222 &205222547
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3065,7 +3068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1845338630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3593,6 +3596,8 @@ MonoBehaviour:
   gosound: {fileID: 787952387}
   panelreg: {fileID: 1834998187}
   panelcredits: {fileID: 1845338629}
+  imageWin: {fileID: 0}
+  imageLose: {fileID: 0}
 --- !u!1 &2131899962
 GameObject:
   m_ObjectHideFlags: 0
