@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1159840}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: AudioSouces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2983,10 +2983,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceBounds: {fileID: 660931393}
-  moveSpeed: 0
-  zoomSpeed: 0
-  closeSize: 0
-  farSize: 0
+  moveSpeed: 10
+  zoomSpeed: 1
+  closeSize: 3
+  farSize: 15
 --- !u!1 &389585958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,7 +3429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callName: BG
   clip: {fileID: 8300000, guid: a06f501eb2847e543b9724b6df1c8683, type: 3}
-  volume: 1
+  volume: 0.8
   pitch: 1
   source: {fileID: 0}
   loop: 1
@@ -8202,7 +8202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderNight: {fileID: 1948635521}
   fillNight: {fileID: 860600137}
-  mainCanvas: {fileID: 0}
+  mainCanvas: {fileID: 401903021}
   canvasSpellCasting: {fileID: 319725826}
   buttonIllusion: {fileID: 251943731}
   buttonPossession: {fileID: 347094435}
@@ -8224,9 +8224,6 @@ MonoBehaviour:
   - {fileID: 28812291}
   - {fileID: 1140582452}
   - {fileID: 433191027}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &1474976873
 MonoBehaviour:
   m_ObjectHideFlags: 0
