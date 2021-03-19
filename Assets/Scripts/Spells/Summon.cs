@@ -13,7 +13,7 @@ public class Summon : Spell
     public override bool Cast()
     {
         if (target.humans.Count > 0) return false;
-        //AudioManager.Instance.Play("Summon");
+        AudioManager.Instance.Play("Cast");
 
         Minion minion = ((GameObject)GameObject.Instantiate(Resources.Load("Villain"), target.GetMiddleFloor(), Quaternion.identity)).GetComponent<Minion>();
         minion.insanityPower = summonPower;

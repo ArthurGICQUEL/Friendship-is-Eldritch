@@ -15,7 +15,7 @@ public class Illusion : Spell
     public override bool Cast()
     {
         if (target.humans.Count == 0) return false;
-        //AudioManager.Instance.Play("Illusion");
+        AudioManager.Instance.Play("Cast");
         int nbHumans = target.humans.Count;
         for (int i = 0; i < nbHumans; i++)
         {

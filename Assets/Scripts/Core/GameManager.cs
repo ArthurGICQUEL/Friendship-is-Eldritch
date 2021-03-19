@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameHasEnded)
         {
+            AudioManager.Instance.Play("BG");
             Bfs.InitGraph();
             instMoon = Instantiate(moonPrefab, transform.position, Quaternion.identity);
             timeOfNight = 0;
@@ -109,11 +110,14 @@ public class GameManager : MonoBehaviour
                 notAllPossessed = true;
             }
         }
-        if (!notAllPossessed) {
+        if (!notAllPossessed)
+        {
             gameHasEnded = true;
             win = true;
             LoadWinLoseScene();
-        } else if (nightEnded) {
+        }
+        else if (nightEnded)
+        {
             gameHasEnded = true;
             LoadWinLoseScene();
         }
